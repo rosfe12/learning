@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>흥국생명 스마트러닝센터 (전체 콘텐츠 복원 최종본)</title>
+    <title>흥국생명 스마트러닝센터 (최종 통합본)</title>
     <style>
         :root {
             /* "딥 오션 블루" 색상 조합 */
@@ -58,7 +58,7 @@
         #side-menu {
             width: 240px; background-color: #151A23; height: 100vh;
             position: fixed; left: 0; top: 0; transform: translateX(-240px);
-            transition: transform 0.3s ease; z-index: 2000; overflow-y: auto;
+            transition: transform 0.3s ease; z-index: 3000; overflow-y: auto;
         }
         #side-menu.active { transform: translateX(0); }
         #side-menu.active + #menu-trigger { opacity: 0; pointer-events: none; }
@@ -129,7 +129,7 @@
         .carousel-wrapper { position: relative; }
         .carousel-wrapper:hover .carousel-arrow { opacity: 1; }
         .carousel-title { font-size: 1.4rem; color: var(--primary-color); font-weight: 500; margin: 50px 0 15px; padding: 0 4%; }
-        .carousel-track { display: flex; overflow-x: auto; padding: 10px 4%; scroll-behavior: smooth; scrollbar-width: none; }
+        .carousel-track { display: flex; overflow-x: auto; padding: 10px 4%; scroll-behavior: smooth; scrollbar-width: none; min-height: 220px; }
         .carousel-track::-webkit-scrollbar { display: none; }
         .carousel-arrow { position: absolute; top: calc(50% + 15px); transform: translateY(-50%); background-color: rgba(0,0,0,0.3); color: white; border: none; width: 50px; height: calc(100% - 50px); cursor: pointer; z-index: 20; font-size: 2.5rem; opacity: 0; transition: opacity 0.3s ease; display: flex; justify-content: center; align-items: center; }
         .carousel-arrow.arrow-prev { left: 0; }
@@ -148,34 +148,34 @@
         .shorts-card { min-width: 160px; }
         .shorts-card .card-thumbnail { height: 280px; }
         
-        /* 이어보기 기능 */
-        .progress-bar-container {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            height: 5px; background-color: rgba(255, 255, 255, 0.2); display: none;
-        }
+        .progress-bar-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 5px; background-color: rgba(255, 255, 255, 0.2); display: none; }
         .progress-bar { height: 100%; background-color: var(--primary-color); border-radius: 0 2px 2px 0; }
-        .play-overlay {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 3rem; color: rgba(255, 255, 255, 0.8);
-            text-shadow: 0 0 10px black; display: none; pointer-events: none;
-        }
-        .content-card.is-in-progress .progress-bar-container,
-        .content-card.is-in-progress .play-overlay { display: block; }
+        .play-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; pointer-events: none; }
+        .continue-watching-text { color: white; background-color: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid rgba(255,255,255,0.5); }
+        .content-card.is-in-progress .play-overlay { display: flex; }
+        
+        .bookmark-btn { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.5); border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; z-index: 3; font-size: 20px; line-height: 32px; text-align: center; transition: transform 0.2s ease; }
+        .bookmark-btn:hover { transform: scale(1.1); }
+        .bookmark-btn::before { content: '♡'; color: white; }
+        .bookmark-btn.bookmarked::before { content: '❤️'; }
+        .empty-bookmark-message { color: var(--text-secondary); padding: 20px 4%; }
 
-        /* 하단 푸터 */
-        footer {
-            padding: 50px 4%; border-top: 1px solid var(--card-color);
-            margin-top: 30px; display: flex; gap: 30px;
-            justify-content: center; align-items: center;
-        }
+        footer { padding: 50px 4%; border-top: 1px solid var(--card-color); margin-top: 30px; display: flex; gap: 30px; justify-content: center; align-items: center; }
         footer a { color: var(--text-secondary); text-decoration: none; }
         
-        /* 영상 팝업 */
-        #videoModal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; }
+        #videoModal, #shortsModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; justify-content: center; align-items: center; }
+        #videoModal { background: rgba(0,0,0,0.85); }
+        #shortsModal { background-color: #000; z-index: 10000; }
         #videoPlayer { max-width: 90%; max-height: 80%; border-radius: 8px; background: black; }
         .close-video-btn { position: absolute; top: 20px; right: 20px; font-size: 2.5rem; background: none; color: white; border: none; cursor: pointer; }
+        .shorts-viewer-container { width: 100%; height: 100%; overflow-y: scroll; scroll-snap-type: y mandatory; }
+        .shorts-viewer-container::-webkit-scrollbar { display: none; }
+        .shorts-video-slide { width: 100%; height: 100%; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; }
+        .shorts-video-slide video { height: 100%; width: auto; max-width: 100%; aspect-ratio: 9 / 16; object-fit: contain; }
+        .close-shorts-btn { position: absolute; top: 30px; left: 30px; font-size: 2rem; background: rgba(255,255,255,0.2); color: white; border: none; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; z-index: 10001; }
+        
+        #no-results-message { color: var(--text-secondary); text-align: center; padding: 50px; font-size: 1.2rem; }
 
-        /* 모바일 반응형 */
         @media (max-width: 768px) {
             html { scroll-padding-top: 58px; } #login-page h1 { font-size: 8vw; } .profiles { gap: 3vw; flex-wrap: wrap; justify-content: center; padding: 0 5vw; } .profile-icon { width: 40vw; height: 40vw; font-size: 2rem; }
             .header-center, .header-right .user-name, .header-right .visit-stats { display: none; } .header-left { flex: initial; } .header-right { flex: initial; } .site-logo { font-size: 1.2rem; }
@@ -198,12 +198,10 @@
         </div>
     </div>
 
-    <div id="videoModal">
-        <video id="videoPlayer" controls><source src="" type="video/mp4"></video>
-        <button onclick="closeVideo()" class="close-video-btn">×</button>
-    </div>
+    <div id="videoModal"><video id="videoPlayer" controls><source src="" type="video/mp4"></video><button onclick="closeVideo()" class="close-video-btn">×</button></div>
+    <div id="shortsModal"><div class="shorts-viewer-container"></div><button onclick="closeShorts()" class="close-shorts-btn">×</button></div>
 
-    <div id="main-page">
+    <div id="main-page" class="hidden">
         <aside id="side-menu">
             <nav>
                 <ul>
@@ -216,6 +214,7 @@
                     <li><a href="#section-points">📌 오늘의 상품 포인트</a></li>
                     <li><a href="#section-knowledge">💡 지식 UP</a></li>
                     <li><a href="#section-it">💻 전산 및 언더</a></li>
+                    <li><a href="#section-bookmarked">❤️ 찜한 콘텐츠</a></li>
                     <li><a href="#footer">📢 공지사항</a></li>
                     <li><a href="#footer">❓ Q&A</a></li>
                 </ul>
@@ -228,11 +227,7 @@
             <header>
                 <div class="header-left"><div class="site-logo">흥국생명 With You</div></div>
                 <div class="header-center"><input type="search" placeholder="학습할 내용을 검색해 보세요..." class="search-box"></div>
-                <div class="header-right">
-                    <span class="user-name">홍길동님</span>
-                    <span class="visit-stats">📊 이달의 방문 : 10회</span>
-                    <button class="mobile-menu-btn">☰</button>
-                </div>
+                <div class="header-right"><span class="user-name">김화현님</span><span class="visit-stats">📊 이달의 방문 : 10회</span><button class="mobile-menu-btn">☰</button></div>
             </header>
 
             <main>
@@ -247,148 +242,153 @@
                 </section>
                 
                 <div class="content-carousel">
-                    <div id="section-shorts" class="carousel-wrapper">
-                        <h2 class="carousel-title">숏츠 모음</h2>
-                        <div class="carousel-track">
-                            <script>for(let i=1; i<=15; i++) { let p=Math.random()*80+10, t=Math.random()>.6?30:0; document.write(`<div class="${t>0?'content-card shorts-card is-in-progress':'content-card shorts-card'}" data-progress="${t}"><div class="card-thumbnail"><img src="https://picsum.photos/160/280?random=${i+10}" alt="숏츠 썸네일"><div class="play-overlay">▶</div><div class="progress-bar-container"><div class="progress-bar" style="width:${p}%"></div></div></div><div class="card-info"><div class="card-title">숏츠 콘텐츠 #${i}</div></div></div>`);}</script>
-                        </div>
-                    </div>
-                    
-                    <div id="section-new" class="carousel-wrapper">
-                        <h2 class="carousel-title">신규 콘텐츠</h2>
-                        <div class="carousel-track">
-                             <script>for(let i=1; i<=15; i++) { let p=Math.random()*80+10, t=Math.random()>.6?30:0; document.write(`<div class="${t>0?'content-card is-in-progress':'content-card'}" data-progress="${t}"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+25}" alt="콘텐츠 썸네일"><div class="play-overlay">▶</div><div class="progress-bar-container"><div class="progress-bar" style="width:${p}%"></div></div></div><div class="card-info"><h3 class="card-title">새로운 콘텐츠 #${i}</h3><div class="card-meta">김흥국 강사 · 조회수 ${Math.floor(Math.random()*10)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);}</script>
-                        </div>
-                    </div>
-
-                    <div id="section-best" class="carousel-wrapper">
-                        <h2 class="carousel-title">베스트 콘텐츠</h2>
-                         <div class="carousel-track">
-                             <script>for(let i=1; i<=15; i++) { let p=Math.random()*80+10, t=Math.random()>.6?30:0; document.write(`<div class="${t>0?'content-card is-in-progress':'content-card'}" data-progress="${t}"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+40}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">인기 콘텐츠 #${i}</h3><div class="card-meta">박생명 강사 · 조회수 ${Math.floor(Math.random()*20)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);}</script>
-                        </div>
-                    </div>
-
-                    <div id="section-products" class="carousel-wrapper">
-                        <h2 class="carousel-title">상품</h2>
-                         <div class="carousel-track">
-                             <script>for(let i=1; i<=15; i++) { let p=Math.random()*80+10, t=Math.random()>.6?30:0; document.write(`<div class="${t>0?'content-card is-in-progress':'content-card'}" data-progress="${t}"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+55}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">금융 상품 #${i}</h3><div class="card-meta">이상품 강사 · 조회수 ${Math.floor(Math.random()*5)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);}</script>
-                        </div>
-                    </div>
-
-                    <div id="section-points" class="carousel-wrapper">
-                        <h2 class="carousel-title">오늘의 상품 포인트</h2>
-                         <div class="carousel-track">
-                             <script>for(let i=1; i<=15; i++) { let p=Math.random()*80+10, t=Math.random()>.6?30:0; document.write(`<div class="${t>0?'content-card is-in-progress':'content-card'}" data-progress="${t}"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+70}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">오늘의 포인트 #${i}</h3><div class="card-meta">운영자 · 조회수 ${Math.floor(Math.random()*9)}천회</div></div></div>`);}</script>
-                        </div>
-                    </div>
-
-                    <div id="section-knowledge" class="carousel-wrapper">
-                        <h2 class="carousel-title">지식 UP</h2>
-                         <div class="carousel-track">
-                             <script>for(let i=1; i<=15; i++) { let p=Math.random()*80+10, t=Math.random()>.6?30:0; document.write(`<div class="${t>0?'content-card is-in-progress':'content-card'}" data-progress="${t}"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+85}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">영업 노하우 #${i}</h3><div class="card-meta">박지식 강사 · 조회수 ${Math.floor(Math.random()*10)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);}</script>
-                        </div>
-                    </div>
-
-                    <div id="section-it" class="carousel-wrapper">
-                        <h2 class="carousel-title">전산 및 언더</h2>
-                         <div class="carousel-track">
-                             <script>for(let i=1; i<=15; i++) { let p=Math.random()*80+10, t=Math.random()>.6?30:0; document.write(`<div class="${t>0?'content-card is-in-progress':'content-card'}" data-progress="${t}"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+100}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">시스템 가이드 #${i}</h3><div class="card-meta">지원팀 · 조회수 ${Math.floor(Math.random()*2)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);}</script>
-                        </div>
-                    </div>
-                    </div>
+                    <div id="section-shorts" class="carousel-wrapper"><h2 class="carousel-title">숏츠 모음</h2><div class="carousel-track" data-track-id="shorts"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-new" class="carousel-wrapper"><h2 class="carousel-title">신규 콘텐츠</h2><div class="carousel-track" data-track-id="new"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-best" class="carousel-wrapper"><h2 class="carousel-title">베스트 콘텐츠</h2><div class="carousel-track" data-track-id="best"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-products" class="carousel-wrapper"><h2 class="carousel-title">상품</h2><div class="carousel-track" data-track-id="products"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-points" class="carousel-wrapper"><h2 class="carousel-title">오늘의 상품 포인트</h2><div class="carousel-track" data-track-id="points"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-knowledge" class="carousel-wrapper"><h2 class="carousel-title">지식 UP</h2><div class="carousel-track" data-track-id="knowledge"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-it" class="carousel-wrapper"><h2 class="carousel-title">전산 및 언더</h2><div class="carousel-track" data-track-id="it"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-bookmarked" class="carousel-wrapper"><h2 class="carousel-title">찜한 콘텐츠</h2><div class="carousel-track" data-track-id="bookmarked"><p class="empty-bookmark-message">아직 찜한 콘텐츠가 없습니다. ❤️ 아이콘을 눌러 원하는 콘텐츠를 추가해 보세요!</p></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                </div>
                 
+                <div id="no-results-message" class="hidden">
+                    <p style="font-size: 2rem; margin: 0;">🤔</p>
+                    <p>검색 결과가 없습니다.</p>
+                </div>
+
                 <footer id="footer">
                     <a href="#">공지사항</a>
-                    <a href="#">QNA</a>
+                    <a href="#">Q&A</a>
                 </footer>
             </main>
         </div>
     </div>
 
     <script>
-        function showMainPage() {
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('main-page').classList.remove('hidden');
-        }
+        // --- 전역 변수 및 데이터 저장소 ---
+        let allCardsData = {};
+        let bookmarkedItems = new Set();
 
-        document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
-            const track = wrapper.querySelector('.carousel-track');
-            const prevButton = wrapper.querySelector('.arrow-prev');
-            const nextButton = wrapper.querySelector('.arrow-next');
-            if (track && prevButton && nextButton) {
-                nextButton.addEventListener('click', () => { track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }); });
-                prevButton.addEventListener('click', () => { track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' }); });
-            }
-        });
-
+        // --- 페이지 초기화 및 기본 기능 ---
+        function showMainPage() { document.getElementById('login-page').style.display = 'none'; document.getElementById('main-page').classList.remove('hidden'); }
         const sideMenu = document.getElementById('side-menu');
-        if (window.innerWidth > 768) {
-            const menuTrigger = document.getElementById('menu-trigger');
-            const mainContent = document.querySelector('.content-wrapper');
-            menuTrigger.addEventListener('mouseenter', () => sideMenu.classList.add('active'));
-            sideMenu.addEventListener('mouseleave', () => sideMenu.classList.remove('active'));
-            mainContent.addEventListener('mouseenter', () => { if (sideMenu.classList.contains('active')) sideMenu.classList.remove('active'); });
-        } else {
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            mobileMenuBtn.addEventListener('click', () => sideMenu.classList.toggle('active'));
-        }
+        if (window.innerWidth > 768) { const menuTrigger = document.getElementById('menu-trigger'); const mainContent = document.querySelector('.content-wrapper'); menuTrigger.addEventListener('mouseenter', () => sideMenu.classList.add('active')); sideMenu.addEventListener('mouseleave', () => sideMenu.classList.remove('active')); mainContent.addEventListener('mouseenter', () => { if (sideMenu.classList.contains('active')) sideMenu.classList.remove('active'); });
+        } else { const mobileMenuBtn = document.querySelector('.mobile-menu-btn'); mobileMenuBtn.addEventListener('click', () => sideMenu.classList.toggle('active')); }
+        document.querySelectorAll('#side-menu a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function (e) { e.preventDefault(); const targetId = this.getAttribute('href'); if (!targetId || targetId === '#') { window.scrollTo({ top: 0, behavior: 'smooth' }); } else { const targetElement = document.querySelector(targetId); if (targetElement) { targetElement.scrollIntoView({ behavior: 'smooth' }); } } document.getElementById('side-menu').classList.remove('active'); }); });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const track = document.querySelector('.hero-track');
-            if (!track) return;
-            const slides = Array.from(track.children);
-            const nextButton = document.querySelector('.hero-arrow.arrow-next');
-            const prevButton = document.querySelector('.hero-arrow.arrow-prev');
-            if (!slides || slides.length === 0 || !nextButton || !prevButton) return;
-            let currentIndex = 0, intervalId = null;
-            const moveToSlide = (targetIndex) => { if (track) track.style.transform = 'translateX(-' + targetIndex * 100 + '%)'; currentIndex = targetIndex; }
-            const startAutoSlide = () => { stopAutoSlide(); intervalId = setInterval(() => { const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); }, 5000); }
-            const stopAutoSlide = () => clearInterval(intervalId);
-            nextButton.addEventListener('click', () => { stopAutoSlide(); const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); startAutoSlide(); });
-            prevButton.addEventListener('click', () => { stopAutoSlide(); const prevIndex = (currentIndex - 1 + slides.length) % slides.length; moveToSlide(prevIndex); startAutoSlide(); });
-            track.addEventListener('mouseenter', stopAutoSlide);
-            track.addEventListener('mouseleave', startAutoSlide);
-            startAutoSlide();
-        });
-
-        function openVideo(videoUrl, startTime = 0) {
-            const modal = document.getElementById('videoModal');
-            const player = document.getElementById('videoPlayer');
-            player.src = videoUrl;
-            player.addEventListener('canplay', function onCanPlay() {
-                player.currentTime = startTime;
-                player.play();
-                player.removeEventListener('canplay', onCanPlay);
-            });
-            modal.style.display = 'flex';
-        }
-
-        function closeVideo() {
-            const modal = document.getElementById('videoModal');
-            const player = document.getElementById('videoPlayer');
-            modal.style.display = 'none';
-            player.pause();
-            player.src = '';
-        }
-
-        document.querySelectorAll('.content-card').forEach((card, index) => {
-            card.addEventListener('click', () => {
-                const sampleVideos = ['https://www.w3schools.com/html/mov_bbb.mp4', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'];
-                const selectedVideo = sampleVideos[index % sampleVideos.length];
-                const progressTime = parseFloat(card.dataset.progress) || 0;
-                openVideo(selectedVideo, progressTime);
-            });
-        });
+        // --- 영상 팝업 기능 ---
+        function openVideo(videoUrl, startTime = 0) { const modal = document.getElementById('videoModal'), player = document.getElementById('videoPlayer'); player.src = videoUrl; player.addEventListener('canplay', function onCanPlay() { player.currentTime = startTime; player.play(); player.removeEventListener('canplay', onCanPlay); }, { once: true }); modal.style.display = 'flex'; }
+        function closeVideo() { const modal = document.getElementById('videoModal'), player = document.getElementById('videoPlayer'); modal.style.display = 'none'; player.pause(); player.src = ''; }
         
-        document.querySelectorAll('#side-menu a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
+        // --- 숏츠 플레이어 기능 ---
+        const shortsModal = document.getElementById('shortsModal'), shortsContainer = document.querySelector('.shorts-viewer-container'), sampleShortsVideos = [ 'https://assets.mixkit.co/videos/vertical/mixkit-girl-in-a-field-of-flowers-33348.mp4', 'https://assets.mixkit.co/videos/vertical/mixkit-tree-with-yellow-flowers-1173.mp4', 'https://assets.mixkit.co/videos/vertical/mixkit-going-down-a-curved-road-on-a-motorcycle-41207.mp4', 'https://assets.mixkit.co/videos/vertical/mixkit-fashion-model-in-a-high-fashion-pose-34279.mp4', 'https://assets.mixkit.co/videos/vertical/mixkit-woman-running-past-a-camera-in-the-forest-34171.mp4' ];
+        let shortsObserver;
+        function openShorts(startIndex) { if(!shortsContainer || !shortsModal) return; shortsContainer.innerHTML = ''; sampleShortsVideos.forEach(src => { const slide = document.createElement('div'); slide.className = 'shorts-video-slide'; const video = document.createElement('video'); video.src = src; video.loop = true; video.playsInline = true; video.muted = true; slide.appendChild(video); shortsContainer.appendChild(slide); }); shortsModal.style.display = 'block'; document.body.style.overflow = 'hidden'; setTimeout(() => { if(shortsContainer) shortsContainer.scrollTop = startIndex * shortsContainer.clientHeight; setupShortsObserver(); }, 0); }
+        function closeShorts() { if(!shortsModal) return; shortsModal.style.display = 'none'; document.body.style.overflow = ''; if(shortsContainer) { shortsContainer.querySelectorAll('video').forEach(v => v.pause()); shortsContainer.innerHTML = ''; } if (shortsObserver) shortsObserver.disconnect(); }
+        function setupShortsObserver() { if (shortsObserver) shortsObserver.disconnect(); const options = { root: shortsContainer, threshold: 0.8 }; shortsObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { const video = entry.target.querySelector('video'); if (entry.isIntersecting) { const playPromise = video.play(); if (playPromise !== undefined) { playPromise.catch(error => {}); } } else { video.pause(); video.currentTime = 0; } }); }, options); shortsContainer.querySelectorAll('.shorts-video-slide').forEach(slide => shortsObserver.observe(slide)); }
+
+        // --- 페이지 로드 시 모든 콘텐츠 동적 생성 및 이벤트 연결 ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroTrack = document.querySelector('.hero-track');
+            if (heroTrack) { const slides = Array.from(heroTrack.children); const nextButton = document.querySelector('.hero-arrow.arrow-next'); const prevButton = document.querySelector('.hero-arrow.arrow-prev'); if (slides && slides.length > 0 && nextButton && prevButton) { let currentIndex = 0, intervalId = null; const moveToSlide = (targetIndex) => { if (heroTrack) heroTrack.style.transform = `translateX(-${targetIndex * 100}%)`; currentIndex = targetIndex; }
+            const startAutoSlide = () => { stopAutoSlide(); intervalId = setInterval(() => { const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); }, 5000); }
+            const stopAutoSlide = () => clearInterval(intervalId); nextButton.addEventListener('click', () => { stopAutoSlide(); const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); startAutoSlide(); }); prevButton.addEventListener('click', () => { stopAutoSlide(); const prevIndex = (currentIndex - 1 + slides.length) % slides.length; moveToSlide(prevIndex); startAutoSlide(); }); heroTrack.addEventListener('mouseenter', stopAutoSlide); heroTrack.addEventListener('mouseleave', startAutoSlide); startAutoSlide(); } }
+
+            function generateCards(trackId, count, options) {
+                const track = document.querySelector(`[data-track-id="${trackId}"]`);
+                if (!track) return; let cardsHTML = '';
+                for (let i = 1; i <= count; i++) {
+                    const videoId = `${trackId}-${i}`; const isBookmarked = bookmarkedItems.has(videoId);
+                    const progress = Math.random() * 80 + 10; const isPartial = Math.random() > 0.6; const progressTime = isPartial ? 30 : 0;
+                    const cardClass = `${options.isShorts ? 'shorts-card' : ''} ${isPartial ? 'is-in-progress' : ''}`;
+                    const imgSrc = options.isShorts ? `https://picsum.photos/160/280?random=${i + options.seed}` : `https://picsum.photos/250/140?random=${i + options.seed}`;
+                    const cardHTML = `<div class="content-card ${cardClass}" data-video-id="${videoId}" data-progress="${progressTime}"><div class="card-thumbnail"><img src="${imgSrc}" alt="${options.title} 썸네일"><button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" aria-label="찜하기"></button><div class="play-overlay"><span class="continue-watching-text">이어서 시청하기</span></div><div class="progress-bar-container"><div class="progress-bar" style="width:${progress}%"></div></div></div><div class="card-info"><div class="card-title">${options.title} #${i}</div>${!options.isShorts ? `<div class="card-meta">${options.instructor} · 조회수 ${Math.floor(Math.random()*20)}.${Math.floor(Math.random()*9)}만회</div>` : ''}</div></div>`;
+                    cardsHTML += cardHTML; allCardsData[videoId] = cardHTML;
                 }
-                document.getElementById('side-menu').classList.remove('active');
+                track.innerHTML = cardsHTML;
+            }
+            
+            function renderBookmarkedCarousel() {
+                const track = document.querySelector(`[data-track-id="bookmarked"]`);
+                if (!track) return;
+                if (bookmarkedItems.size === 0) { track.innerHTML = `<p class="empty-bookmark-message">아직 찜한 콘텐츠가 없습니다. ❤️ 아이콘을 눌러 원하는 콘텐츠를 추가해 보세요!</p>`; return; }
+                let cardsHTML = '';
+                bookmarkedItems.forEach(videoId => { if(allCardsData[videoId]) cardsHTML += allCardsData[videoId]; });
+                track.innerHTML = cardsHTML;
+                attachCardClickListeners(track);
+            }
+
+            const allTracks = [
+                { id: 'shorts', options: { isShorts: true, title: '숏츠 콘텐츠', seed: 10 } }, { id: 'new', options: { isShorts: false, title: '새로운 콘텐츠', instructor: '김흥국 강사', seed: 25 } },
+                { id: 'best', options: { isShorts: false, title: '베스트 콘텐츠', instructor: '박생명 강사', seed: 40 } }, { id: 'products', options: { isShorts: false, title: '금융 상품', instructor: '이상품 강사', seed: 55 } },
+                { id: 'points', options: { isShorts: false, title: '오늘의 포인트', instructor: '운영자', seed: 70 } }, { id: 'knowledge', options: { isShorts: false, title: '영업 노하우', instructor: '박지식 강사', seed: 85 } },
+                { id: 'it', options: { isShorts: false, title: '시스템 가이드', instructor: '지원팀', seed: 100 } }
+            ];
+            allTracks.forEach(trackInfo => generateCards(trackInfo.id, 15, trackInfo.options));
+
+            function attachCardClickListeners(parentElement) {
+                parentElement.querySelectorAll('.content-card').forEach(card => {
+                    // 북마크 버튼 클릭 이벤트
+                    const bookmarkBtn = card.querySelector('.bookmark-btn');
+                    if (bookmarkBtn && !bookmarkBtn.dataset.listenerAttached) {
+                        bookmarkBtn.dataset.listenerAttached = 'true';
+                        bookmarkBtn.addEventListener('click', (e) => {
+                            e.stopPropagation(); const videoId = card.dataset.videoId;
+                            if (bookmarkedItems.has(videoId)) { bookmarkedItems.delete(videoId); e.target.classList.remove('bookmarked'); } else { bookmarkedItems.add(videoId); e.target.classList.add('bookmarked'); }
+                            renderBookmarkedCarousel();
+                        });
+                    }
+
+                    // 카드 본체 클릭 이벤트
+                    if (!card.dataset.listenerAttached) {
+                        card.dataset.listenerAttached = 'true';
+                        card.addEventListener('click', () => {
+                            if (!card.classList.contains('shorts-card')) {
+                                const sampleVideos = ['https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'];
+                                const progressTime = parseFloat(card.dataset.progress) || 0;
+                                openVideo(sampleVideos[Math.floor(Math.random() * sampleVideos.length)], progressTime);
+                            } else {
+                                const allShortsOnPage = Array.from(document.querySelectorAll('.shorts-card'));
+                                const clickedIndex = allShortsOnPage.indexOf(card);
+                                openShorts(clickedIndex % sampleShortsVideos.length);
+                            }
+                        });
+                    }
+                });
+            }
+
+            attachCardClickListeners(document.querySelector('.content-carousel'));
+            
+            const searchInput = document.querySelector('.search-box');
+            const noResultsMessage = document.getElementById('no-results-message');
+
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                let totalMatches = 0;
+                
+                allTracks.forEach(trackInfo => {
+                    const track = document.querySelector(`[data-track-id="${trackInfo.id}"]`);
+                    const wrapper = track.closest('.carousel-wrapper');
+                    let cardsHTML = ''; let matchesInThisCarousel = 0;
+                    for (const videoId in allCardsData) {
+                        if (videoId.startsWith(trackInfo.id)) {
+                            const cardData = allCardsData[videoId];
+                            if (cardData.toLowerCase().includes(query)) { cardsHTML += cardData; matchesInThisCarousel++; }
+                        }
+                    }
+                    track.innerHTML = cardsHTML;
+                    if(matchesInThisCarousel > 0) { wrapper.style.display = ''; totalMatches++; } else { wrapper.style.display = 'none'; }
+                });
+
+                document.querySelector('[data-track-id="bookmarked"]').closest('.carousel-wrapper').style.display = (query) ? 'none' : '';
+                noResultsMessage.style.display = (totalMatches === 0 && query) ? 'block' : 'none';
+                attachCardClickListeners(document.querySelector('.content-carousel'));
+            });
+            
+            document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
+                const track = wrapper.querySelector('.carousel-track'); const prevButton = wrapper.querySelector('.arrow-prev'); const nextButton = wrapper.querySelector('.arrow-next');
+                if (track && prevButton && nextButton) { nextButton.addEventListener('click', () => { track.scrollBy({ left: track.clientWidth * 0.8, behavior: 'smooth' }); }); prevButton.addEventListener('click', () => { track.scrollBy({ left: -track.clientWidth * 0.8, behavior: 'smooth' }); }); }
             });
         });
     </script>
