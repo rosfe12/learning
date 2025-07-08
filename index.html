@@ -291,13 +291,119 @@
         const sideMenu = document.getElementById('side-menu'); if (window.innerWidth > 768) { const menuTrigger = document.getElementById('menu-trigger'); const mainContent = document.querySelector('.content-wrapper'); menuTrigger.addEventListener('mouseenter', () => sideMenu.classList.add('active')); sideMenu.addEventListener('mouseleave', () => sideMenu.classList.remove('active')); mainContent.addEventListener('mouseenter', () => { if (sideMenu.classList.contains('active')) sideMenu.classList.remove('active'); });
         } else { const mobileMenuBtn = document.querySelector('.mobile-menu-btn'); mobileMenuBtn.addEventListener('click', () => sideMenu.classList.toggle('active')); }
         document.querySelectorAll('#side-menu a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function (e) { e.preventDefault(); const targetId = this.getAttribute('href'); if (!targetId || targetId === '#') { window.scrollTo({ top: 0, behavior: 'smooth' }); } else { const targetElement = document.querySelector(targetId); if (targetElement) { targetElement.scrollIntoView({ behavior: 'smooth' }); } } document.getElementById('side-menu').classList.remove('active'); }); });
-        function openVideo(videoUrl, startTime = 0) { const modal = document.getElementById('videoModal'), player = document.getElementById('videoPlayer'); player.src = videoUrl; player.addEventListener('canplay', function onCanPlay() { player.currentTime = startTime; player.play(); player.removeEventListener('canplay', onCanPlay); }, { once: true }); modal.style.display = 'flex'; }
-        function closeVideo() { const modal = document.getElementById('videoModal'), player = document.getElementById('videoPlayer'); modal.style.display = 'none'; player.pause(); player.src = ''; }
-        const shortsModal = document.getElementById('shortsModal'), shortsContainer = document.querySelector('.shorts-viewer-container'), sampleShortsVideos = [ 'https://assets.mixkit.co/videos/vertical/mixkit-girl-in-a-field-of-flowers-33348.mp4', 'https://assets.mixkit.co/videos/vertical/mixkit-tree-with-yellow-flowers-1173.mp4', 'https://assets.mixkit.co/videos/vertical/mixkit-going-down-a-curved-road-on-a-motorcycle-41207.mp4', 'https://assets.mixkit.co/videos/vertical/mixkit-fashion-model-in-a-high-fashion-pose-34279.mp4', 'https://assets.mixkit.co/videos/vertical/mixkit-woman-running-past-a-camera-in-the-forest-34171.mp4' ];
+
+     // 영상 팝업 기능
+    function openVideo(videoUrl, startTime = 0) {
+        const modal = document.getElementById('videoModal');
+        const player = document.getElementById('videoPlayer');
+        player.src = videoUrl;
+        player.addEventListener('canplay', function onCanPlay() {
+            player.currentTime = startTime;
+            setTimeout(() => player.play(), 50);
+            player.removeEventListener('canplay', onCanPlay);
+        }, { once: true });
+        modal.style.display = 'flex';
+    }
+  
+    function closeVideo() {
+        const modal = document.getElementById('videoModal');
+        const player = document.getElementById('videoPlayer');
+        modal.style.display = 'none';
+        player.pause();
+        player.src = '';
+    }
+
+  // 숏츠 재생 기능
+    const shortsModal = document.getElementById('shortsModal');
+    const shortsContainer = document.querySelector('.shorts-viewer-container');
+  const sampleShortsVideos = [
+    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+];
         let shortsObserver;
-        function openShorts(startIndex) { if(!shortsContainer || !shortsModal) return; shortsContainer.innerHTML = ''; sampleShortsVideos.forEach(src => { const slide = document.createElement('div'); slide.className = 'shorts-video-slide'; const video = document.createElement('video'); video.src = src; video.loop = true; video.playsInline = true; video.muted = true; slide.appendChild(video); shortsContainer.appendChild(slide); }); shortsModal.style.display = 'block'; document.body.style.overflow = 'hidden'; setTimeout(() => { if(shortsContainer) shortsContainer.scrollTop = startIndex * shortsContainer.clientHeight; setupShortsObserver(); }, 50); }
-        function closeShorts() { if(!shortsModal) return; shortsModal.style.display = 'none'; document.body.style.overflow = ''; if(shortsContainer) { shortsContainer.querySelectorAll('video').forEach(v => v.pause()); shortsContainer.innerHTML = ''; } if (shortsObserver) shortsObserver.disconnect(); }
-        function setupShortsObserver() { if (shortsObserver) shortsObserver.disconnect(); const options = { root: shortsContainer, threshold: 0.8 }; shortsObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { const video = entry.target.querySelector('video'); if (entry.isIntersecting) { const playPromise = video.play(); if (playPromise !== undefined) { playPromise.catch(error => {}); } } else { video.pause(); video.currentTime = 0; } }); }, options); shortsContainer.querySelectorAll('.shorts-video-slide').forEach(slide => shortsObserver.observe(slide)); }
+
+function openShorts(startIndex = 0) {
+    if (!shortsContainer || !shortsModal) return;
+
+         shortsContainer.innerHTML = '';
+
+    // 숏츠 영상들 생성
+    sampleShortsVideos.forEach((src, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'shorts-video-slide';
+        slide.style.scrollSnapAlign = 'start';
+
+        const video = document.createElement('video');
+        video.src = src;
+        video.loop = true;
+        video.playsInline = true;
+        video.muted = true;
+        video.autoplay = true;
+        video.controls = false;
+        video.setAttribute('preload', 'metadata');
+        video.style.height = '100%';
+        video.style.width = 'auto';
+        video.style.maxWidth = '100%';
+        video.style.aspectRatio = '9 / 16';
+        video.style.objectFit = 'contain';
+
+        slide.appendChild(video);
+        shortsContainer.appendChild(slide);
+    });
+
+     // 모달 열기
+    shortsModal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+    // 스크롤 위치 이동 + 관찰자 설정
+    setTimeout(() => {
+        shortsContainer.scrollTo({
+            top: startIndex * shortsContainer.clientHeight,
+            behavior: 'instant'
+        });
+        setupShortsObserver();
+    }, 50);
+}
+
+   function closeShorts() {
+        if (!shortsModal) return;
+        shortsModal.style.display = 'none';
+        document.body.style.overflow = '';
+        if (shortsContainer) {
+            shortsContainer.querySelectorAll('video').forEach(v => v.pause());
+            shortsContainer.innerHTML = '';
+        }
+        if (shortsObserver) shortsObserver.disconnect();
+    }
+
+  function setupShortsObserver() {
+    if (shortsObserver) shortsObserver.disconnect();
+
+    const options = {
+        root: shortsContainer,
+        threshold: 0.8
+    };
+
+   
+    shortsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const video = entry.target.querySelector('video');
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    video.play().catch(() => {});
+                }, 50);
+            } else {
+                video.pause();
+                video.currentTime = 0;
+            }
+        });
+    }, options);
+
+    shortsContainer.querySelectorAll('.shorts-video-slide').forEach(slide => {
+        shortsObserver.observe(slide);
+    });
+}
 
         document.addEventListener('DOMContentLoaded', () => {
             const bgVideo = document.getElementById('login-bg-video');
