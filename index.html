@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>흥국생명 스마트러닝센터 (로그인 화면 수정본)</title>
+    <title>흥국생명 스마트러닝센터 (콘텐츠 복원 최종본)</title>
     <style>
         :root {
             /* "딥 오션 블루" 색상 조합 */
@@ -22,7 +22,7 @@
             overflow-x: hidden;
         }
 
-        /* ========= 로그인 페이지 수정 시작 ========= */
+        /* --- 로그인 페이지 --- */
         #login-page {
             display: flex;
             flex-direction: column;
@@ -59,7 +59,6 @@
             transform: scale(1.05);
             border-color: var(--text-primary);
         }
-        /* ========= 로그인 페이지 수정 끝 ========= */
 
         /* --- 메인 페이지 --- */
         .hidden { display: none; }
@@ -224,12 +223,13 @@
             </div>
         </div>
     </div>
+
     <div id="videoModal">
         <video id="videoPlayer" controls><source src="" type="video/mp4"></video>
         <button onclick="closeVideo()" class="close-video-btn">×</button>
     </div>
 
-    <div id="main-page" class="hidden">
+    <div id="main-page">
         <aside id="side-menu">
             <nav>
                 <ul>
@@ -283,8 +283,62 @@
                 </section>
                 
                 <div class="content-carousel">
+                    <div class="carousel-wrapper">
+                        <h2 class="carousel-title">숏츠 모음</h2>
+                        <div class="carousel-track">
+                            <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card shorts-card"><div class="card-thumbnail"><img src="https://picsum.photos/160/280?random=${i+10}" alt="숏츠 썸네일"></div><div class="card-info"><div class="card-title">숏츠 콘텐츠 #${i}</div></div></div>`);</script>
+                        </div>
+                        <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
                     </div>
-                
+                    
+                    <div class="carousel-wrapper">
+                        <h2 class="carousel-title">신규 콘텐츠</h2>
+                        <div class="carousel-track">
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+25}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">새로운 콘텐츠 #${i}</h3><div class="card-meta">김흥국 강사 · 조회수 ${Math.floor(Math.random()*10)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
+                        </div>
+                        <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
+                    </div>
+
+                    <div class="carousel-wrapper">
+                        <h2 class="carousel-title">베스트 콘텐츠</h2>
+                         <div class="carousel-track">
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+40}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">인기 콘텐츠 #${i}</h3><div class="card-meta">박생명 강사 · 조회수 ${Math.floor(Math.random()*20)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
+                        </div>
+                        <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
+                    </div>
+
+                    <div class="carousel-wrapper">
+                        <h2 class="carousel-title">상품</h2>
+                         <div class="carousel-track">
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+55}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">금융 상품 #${i}</h3><div class="card-meta">이상품 강사 · 조회수 ${Math.floor(Math.random()*5)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
+                        </div>
+                        <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
+                    </div>
+
+                    <div class="carousel-wrapper">
+                        <h2 class="carousel-title">오늘의 상품 포인트</h2>
+                         <div class="carousel-track">
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+70}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">오늘의 포인트 #${i}</h3><div class="card-meta">운영자 · 조회수 ${Math.floor(Math.random()*9)}천회</div></div></div>`);</script>
+                        </div>
+                        <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
+                    </div>
+
+                    <div class="carousel-wrapper">
+                        <h2 class="carousel-title">지식 UP</h2>
+                         <div class="carousel-track">
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+85}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">영업 노하우 #${i}</h3><div class="card-meta">박지식 강사 · 조회수 ${Math.floor(Math.random()*10)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
+                        </div>
+                        <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
+                    </div>
+
+                    <div class="carousel-wrapper">
+                        <h2 class="carousel-title">전산 및 언더</h2>
+                         <div class="carousel-track">
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+100}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">시스템 가이드 #${i}</h3><div class="card-meta">지원팀 · 조회수 ${Math.floor(Math.random()*2)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
+                        </div>
+                        <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
+                    </div>
+                </div>
                 <footer>
                     <a href="#">공지사항</a>
                     <a href="#">QNA</a>
@@ -294,8 +348,6 @@
     </div>
 
     <script>
-        // 스크립트 코드는 이전과 동일하게 유지됩니다.
-        // 이 부분은 생략하지 않고 전체 코드를 포함합니다.
         function showMainPage() {
             document.getElementById('login-page').style.display = 'none';
             document.getElementById('main-page').classList.remove('hidden');
@@ -334,8 +386,8 @@
             const moveToSlide = (targetIndex) => { if (track) track.style.transform = 'translateX(-' + targetIndex * 100 + '%)'; currentIndex = targetIndex; }
             const startAutoSlide = () => { stopAutoSlide(); intervalId = setInterval(() => { const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); }, 5000); }
             const stopAutoSlide = () => clearInterval(intervalId);
-            nextButton.addEventListener('click', () => { stopAutoSlide(); const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); });
-            prevButton.addEventListener('click', () => { stopAutoSlide(); const prevIndex = (currentIndex - 1 + slides.length) % slides.length; moveToSlide(prevIndex); });
+            nextButton.addEventListener('click', () => { stopAutoSlide(); const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); startAutoSlide(); });
+            prevButton.addEventListener('click', () => { stopAutoSlide(); const prevIndex = (currentIndex - 1 + slides.length) % slides.length; moveToSlide(prevIndex); startAutoSlide(); });
             track.addEventListener('mouseenter', stopAutoSlide);
             track.addEventListener('mouseleave', startAutoSlide);
             startAutoSlide();
