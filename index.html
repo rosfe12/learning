@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>흥국생명 스마트러닝센터 (이미지 적용 최종본)</title>
+    <title>흥국생명 스마트러닝센터 (모바일 반응형 최종본)</title>
     <style>
         :root {
             /* "딥 오션 블루" 색상 조합 */
-            --primary-color: #38B2AC;      /* 포인트/제목색 (청록색) */
-            --background-color: #1A202C;   /* 배경색 (짙은 남색) */
-            --card-color: #2D3748;         /* 카드 배경색 (회색빛 남색) */
-            --text-primary: #E2E8F0;       /* 주요 텍스트색 (부드러운 흰색) */
-            --text-secondary: #A0AEC0;     /* 보조 텍스트색 (회색빛 파란색) */
+            --primary-color: #38B2AC;
+            --background-color: #1A202C;
+            --card-color: #2D3748;
+            --text-primary: #E2E8F0;
+            --text-secondary: #A0AEC0;
         }
 
         body {
@@ -24,161 +24,395 @@
 
         /* --- 로그인 페이지 --- */
         #login-page {
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            height: 100vh; text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
         }
-        #login-page h1 { font-size: 3.5vw; font-weight: 500; }
-        .profiles { display: flex; gap: 2vw; margin-top: 2rem; }
-        .profile { cursor: pointer; text-align: center; }
-        .profile:hover .profile-icon { transform: scale(1.05); border-color: var(--text-primary); }
+        #login-page h1 { font-size: 5vw; max-font-size: 40px; font-weight: 500; }
+        .profiles { display: flex; gap: 3vw; margin-top: 2rem; }
         .profile-icon {
-            width: 10vw; height: 10vw; max-width: 150px; max-height: 150px;
+            width: 15vw; height: 15vw; max-width: 120px; max-height: 120px;
             background: linear-gradient(45deg, var(--primary-color), #2C7A7B);
-            border-radius: 8px; border: 0.2vw solid transparent; transition: all 0.2s ease;
-            display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: bold;
+            border-radius: 8px;
+            border: 0.2vw solid transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
-        .profile-name { margin-top: 0.8rem; font-size: 1.2vw; color: var(--text-secondary); }
+        .profile:hover .profile-icon { transform: scale(1.05); }
+        .profile-name { margin-top: 0.8rem; font-size: 3vw; max-font-size: 16px; color: var(--text-secondary); }
 
         /* --- 메인 페이지 --- */
         .hidden { display: none; }
         #main-page { display: flex; }
         
         /* --- 좌측 메뉴 --- */
-        #menu-trigger {
-            position: fixed; left: 0; top: 0; bottom: 0;
-            width: 25px; z-index: 2001; display: flex; align-items: center;
-            justify-content: center; cursor: pointer; transition: opacity 0.3s ease;
-        }
-        #menu-trigger span {
-            writing-mode: vertical-rl; background-color: rgba(0,0,0,0.3);
-            padding: 15px 5px; border-radius: 0 5px 5px 0;
-            font-size: 14px; color: var(--text-secondary);
-        }
         #side-menu {
-            width: 240px; background-color: #151A23;
-            height: 100vh; position: fixed; left: 0; top: 0;
-            transform: translateX(-240px); transition: transform 0.3s ease;
-            z-index: 2000; overflow-y: auto;
+            width: 240px;
+            background-color: #151A23;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transform: translateX(-240px);
+            transition: transform 0.3s ease;
+            z-index: 3000;
+            overflow-y: auto;
         }
         #side-menu.active { transform: translateX(0); }
-        #side-menu.active + #menu-trigger { opacity: 0; pointer-events: none; }
         #side-menu nav { padding: 80px 0; }
         #side-menu nav ul { list-style: none; padding: 0; margin: 0; }
         #side-menu nav a { 
-            display: flex; align-items: center; gap: 20px;
-            padding: 12px 24px; text-decoration: none; color: var(--text-secondary); font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 12px 24px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
-        #side-menu nav a:hover { background-color: var(--card-color); color: var(--text-primary); }
+        #side-menu nav a:hover {
+            background-color: var(--card-color);
+            color: var(--text-primary);
+        }
         
-        .content-wrapper { width: 100%; transition: margin-left 0.3s ease; }
+        /* 데스크톱용 메뉴 트리거 */
+        #menu-trigger {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 25px;
+            z-index: 2001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        #menu-trigger span {
+            writing-mode: vertical-rl;
+            background-color: rgba(0,0,0,0.3);
+            padding: 15px 5px;
+            border-radius: 0 5px 5px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        #side-menu.active + #menu-trigger {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .content-wrapper { width: 100%; }
 
         /* --- 상단 헤더 --- */
         header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 2%; height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2%;
+            height: 68px;
             background: linear-gradient(to bottom, rgba(26,32,44,0.8) 10%, rgba(26,32,44,0));
-            position: fixed; top: 0; width: 96%; z-index: 1000;
+            position: fixed;
+            top: 0;
+            width: 96%;
+            z-index: 1000;
         }
-        .header-left { flex: 1; display: flex; justify-content: flex-start; }
-        .site-logo { font-size: 1.5rem; color: var(--primary-color); font-weight: bold; }
-        .header-center { flex: 2; display: flex; justify-content: center; }
+        .header-left {
+            flex: 1;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .site-logo {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .header-center {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+        }
         .search-box { 
-            background-color: rgba(0,0,0,0.2); border: 1px solid var(--card-color); 
-            color: var(--text-primary); padding: 10px 15px; border-radius: 20px;
-            width: 80%; max-width: 500px; font-size: 1rem;
+            background-color: rgba(0,0,0,0.2);
+            border: 1px solid var(--card-color); 
+            color: var(--text-primary);
+            padding: 10px 15px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 500px;
+            font-size: 1rem;
         }
-        .search-box:focus { outline: none; border-color: var(--primary-color); }
-        .header-right { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 20px; }
-        .user-name { font-weight: bold; color: var(--text-primary); }
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .header-right { 
+            flex: 1;
+            display: flex; 
+            align-items: center; 
+            justify-content: flex-end;
+            gap: 20px; 
+        }
+        .user-name, .visit-stats {
+            font-size: 0.9rem;
+        }
+        .user-name {
+            font-weight: bold;
+        }
         .visit-stats {
-            font-size: 0.9rem; color: var(--text-secondary); background-color: var(--card-color);
-            padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: background-color 0.2s;
+            white-space: nowrap;
         }
-        .visit-stats:hover { background-color: #4A5568; }
-        
+        .mobile-menu-btn {
+            display: none; /* 모바일용 메뉴 버튼은 평소에 숨김 */
+        }
+
         main {
-            padding-top: 68px; /* 헤더 높이만큼 상단 여백 추가 */
+            padding-top: 68px;
         }
         
         /* --- 추천 콘텐츠 슬라이더 --- */
         .hero-section {
-            height: 56.25vw; max-height: 80vh; width: 100%;
-            position: relative; overflow: hidden; 
+            height: 56.25vw;
+            max-height: 80vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden; 
         }
-        .hero-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
+        .hero-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out; 
+        }
         .hero-slide {
-            min-width: 100%; height: 100%; background-size: cover; background-position: center;
-            position: relative; display: flex; align-items: center;
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
         }
         .hero-slide::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(to right, rgba(26,32,44,0.8) 20%, transparent 80%);
         }
-        .hero-info { padding-left: 4%; max-width: 40%; position: relative; z-index: 2; }
+        .hero-info { 
+            padding-left: 4%; 
+            max-width: 40%;
+            position: relative; 
+            z-index: 2;
+        }
         .hero-info h2 { font-size: 3vw; margin: 0; }
         .hero-info p { font-size: 1.2vw; color: var(--text-secondary); }
         .hero-arrow {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background-color: rgba(0,0,0,0.3); color: white; border: none;
-            width: 50px; height: 100px; cursor: pointer; z-index: 10;
-            font-size: 3rem; opacity: 0; transition: opacity 0.3s ease;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.3);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 100px;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 3rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .hero-section:hover .hero-arrow { opacity: 1; }
+        .hero-section:hover .hero-arrow {
+            opacity: 1;
+        }
         .hero-arrow.arrow-prev { left: 20px; }
         .hero-arrow.arrow-next { right: 20px; }
         
         /* --- 콘텐츠 캐러셀 --- */
-        .content-carousel { padding: 0; margin-top: 50px; position: relative; z-index: 10; }
-        .carousel-wrapper { position: relative; }
-        .carousel-wrapper:hover .carousel-arrow { opacity: 1; }
-        .carousel-title { font-size: 1.4rem; color: var(--primary-color); font-weight: 500; margin-bottom: 15px; margin-top: 50px; padding: 0 4%; }
-        .carousel-track { display: flex; overflow-x: auto; overflow-y: hidden; padding: 0 4%; scroll-behavior: smooth; scrollbar-width: none; }
-        .carousel-track::-webkit-scrollbar { display: none; }
-        .carousel-arrow { position: absolute; top: calc(50% + 15px); transform: translateY(-50%); background-color: rgba(0,0,0,0.3); color: white; border: none; width: 50px; height: calc(100% - 30px); cursor: pointer; z-index: 20; font-size: 2.5rem; opacity: 0; transition: opacity 0.3s ease; display: flex; justify-content: center; align-items: center; }
+        .content-carousel {
+            padding: 0;
+            margin-top: 50px;
+        }
+        .carousel-wrapper {
+            position: relative;
+        }
+        .carousel-wrapper:hover .carousel-arrow {
+            opacity: 1;
+        }
+        .carousel-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 500;
+            margin: 50px 0 15px;
+            padding: 0 4%;
+        }
+        .carousel-track {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 10px 4%;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+        .carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+        .carousel-arrow {
+            position: absolute;
+            top: calc(50% + 15px);
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.3);
+            color: white;
+            border: none;
+            width: 50px;
+            height: calc(100% - 50px);
+            cursor: pointer;
+            z-index: 20;
+            font-size: 2.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         .carousel-arrow.arrow-prev { left: 0; }
         .carousel-arrow.arrow-next { right: 0; }
         .content-card {
-            min-width: 250px; margin-right: 10px; background-color: var(--card-color);
-            border-radius: 8px; overflow: hidden; cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            min-width: 250px;
+            margin-right: 10px;
+            background-color: var(--card-color);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
-        .content-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .content-card:hover {
+            transform: scale(1.05);
+        }
         .card-thumbnail { 
-            width: 100%; height: 140px; 
+            width: 100%;
+            height: 140px; 
             background-color: #4A5568; 
             overflow: hidden;
         }
         .card-thumbnail img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 이미지가 잘리더라도 비율을 유지하며 꽉 채움 */
+            object-fit: cover;
         }
         .card-info { padding: 15px; }
-        .card-title { font-size: 1rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-primary); }
-        .card-meta { font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; }
-
+        .card-title {
+            font-size: 1rem;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
         .shorts-card { min-width: 160px; }
         .shorts-card .card-thumbnail { height: 280px; }
 
-        footer { padding: 50px 4%; border-top: 1px solid var(--card-color); margin-top: 30px; display: flex; gap: 30px; }
-        footer a { color: var(--text-secondary); text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-
+        footer {
+            padding: 50px 4%;
+            border-top: 1px solid var(--card-color);
+            margin-top: 30px;
+        }
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        
         /* --- 영상 팝업 --- */
         #videoModal {
-            display: none; position: fixed; top: 0; left: 0; 
-            width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); 
-            z-index: 9999; justify-content: center; align-items: center;
+            display: none;
+            position: fixed;
+            top: 0; left: 0; 
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85); 
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
         }
         #videoPlayer {
-            max-width: 80%; max-height: 80%; border: 5px solid white; 
-            border-radius: 8px; background: black;
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 8px;
+            background: black;
         }
         .close-video-btn {
-            position: absolute; top: 30px; right: 40px; font-size: 2.5rem; 
-            background: none; color: white; border: none; cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2.5rem;
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
             line-height: 1;
         }
+
+        /* ======================================================= */
+        /* ========= 모바일 반응형 (Responsive) CSS 시작 ========= */
+        /* ======================================================= */
+        @media (max-width: 768px) {
+            /* 헤더: 로고 | 메뉴 아이콘 형태로 변경 */
+            .header-center, .header-right .user-name, .header-right .visit-stats {
+                display: none;
+            }
+            .header-left { flex: initial; } /* 로고가 공간을 다 차지하지 않게 */
+            .header-right { flex: initial; }
+
+            .site-logo { font-size: 1.2rem; }
+            .mobile-menu-btn {
+                display: block; /* 모바일에서만 햄버거 메뉴 아이콘 표시 */
+                font-size: 28px;
+                background: none;
+                color: var(--text-primary);
+                border: none;
+                cursor: pointer;
+            }
+            
+            /* 좌측 메뉴: 데스크톱용 hover 트리거 숨김 */
+            #menu-trigger {
+                display: none;
+            }
+
+            /* 추천 슬라이더: 텍스트 크기 조정 */
+            .hero-info { max-width: 80%; }
+            .hero-info h2 { font-size: 6vw; }
+            .hero-info p { font-size: 3vw; }
+            .hero-arrow { display: none; /* 모바일에선 터치로 넘기므로 화살표 숨김 */ }
+
+            /* 콘텐츠 캐러셀: 카드 크기 조정 */
+            .carousel-arrow {
+                display: none; /* 모바일에선 화살표 숨김 */
+            }
+            .content-card {
+                min-width: 180px;
+            }
+            .shorts-card {
+                min-width: 120px;
+            }
+            .carousel-title { font-size: 1.2rem; }
+            .card-title { font-size: 0.9rem; }
+            .card-meta { font-size: 0.7rem; }
+        }
+
     </style>
 </head>
 <body>
@@ -201,7 +435,7 @@
         <button onclick="closeVideo()" class="close-video-btn">×</button>
     </div>
 
-    <div id="main-page" class="hidden">
+    <div id="main-page">
         <aside id="side-menu">
             <nav>
                 <ul>
@@ -219,6 +453,7 @@
                 </ul>
             </nav>
         </aside>
+        
         <div id="menu-trigger"><span>메뉴 보기</span></div>
 
         <div class="content-wrapper">
@@ -231,26 +466,27 @@
                 </div>
                 <div class="header-right">
                     <span class="user-name">김화현님</span>
-                    <span class="visit-stats">📊 이번달 방문 : 10회</span>
+                    <span class="visit-stats">📊 이달의 방문 : 10회</span>
+                    <button class="mobile-menu-btn">☰</button>
                 </div>
             </header>
 
             <main>
                 <section class="hero-section">
                     <div class="hero-track">
-                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?grayscale&blur=2');">
+                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=1');">
                             <div class="hero-info">
                                 <h2>필수 시청! 7월 개정 상품 완전정복</h2>
                                 <p>달라진 보장 내용과 핵심 판매 포인트를 영상 하나로 끝내세요.</p>
                             </div>
                         </div>
-                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?grayscale');">
+                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=2');">
                             <div class="hero-info">
                                 <h2>고객 감동을 이끄는 상담 노하우</h2>
                                 <p>평범한 상담을 넘어 고객의 마음을 사로잡는 비결을 공개합니다.</p>
                             </div>
                         </div>
-                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900');">
+                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=3');">
                             <div class="hero-info">
                                 <h2>신입을 위한 영업 성공 가이드</h2>
                                 <p>이제 막 시작하는 당신을 위해 준비했습니다. A부터 Z까지!</p>
@@ -265,7 +501,7 @@
                     <div class="carousel-wrapper">
                         <h2 class="carousel-title">숏츠 모음</h2>
                         <div class="carousel-track">
-                            <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card shorts-card"><div class="card-thumbnail"><img src="https://picsum.photos/160/280?random=${i}" alt="숏츠 썸네일"></div><div class="card-info"><div class="card-title">숏츠 콘텐츠 #${i}</div></div></div>`);</script>
+                            <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card shorts-card"><div class="card-thumbnail"><img src="https://picsum.photos/160/280?random=${i+10}" alt="숏츠 썸네일"></div><div class="card-info"><div class="card-title">숏츠 콘텐츠 #${i}</div></div></div>`);</script>
                         </div>
                         <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
                     </div>
@@ -273,7 +509,7 @@
                     <div class="carousel-wrapper">
                         <h2 class="carousel-title">신규 콘텐츠</h2>
                         <div class="carousel-track">
-                             <script>for(let i=16; i<=30; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">새로운 콘텐츠 #${i-15}</h3><div class="card-meta">김흥국 강사 · 조회수 ${Math.floor(Math.random()*10)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+25}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">새로운 콘텐츠 #${i}</h3><div class="card-meta">김흥국 강사 · 조회수 ${Math.floor(Math.random()*10)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
                         </div>
                         <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
                     </div>
@@ -281,7 +517,7 @@
                     <div class="carousel-wrapper">
                         <h2 class="carousel-title">베스트 콘텐츠</h2>
                          <div class="carousel-track">
-                             <script>for(let i=31; i<=45; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">인기 콘텐츠 #${i-30}</h3><div class="card-meta">박생명 강사 · 조회수 ${Math.floor(Math.random()*20)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+40}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">인기 콘텐츠 #${i}</h3><div class="card-meta">박생명 강사 · 조회수 ${Math.floor(Math.random()*20)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
                         </div>
                         <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
                     </div>
@@ -289,24 +525,52 @@
                     <div class="carousel-wrapper">
                         <h2 class="carousel-title">상품</h2>
                          <div class="carousel-track">
-                             <script>for(let i=46; i<=60; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">금융 상품 #${i-45}</h3><div class="card-meta">이상품 강사 · 조회수 ${Math.floor(Math.random()*5)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+55}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">금융 상품 #${i}</h3><div class="card-meta">이상품 강사 · 조회수 ${Math.floor(Math.random()*5)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
                         </div>
                         <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
                     </div>
-                    
+
+                    <div class="carousel-wrapper">
+                        <h2 class="carousel-title">오늘의 상품 포인트</h2>
+                         <div class="carousel-track">
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+70}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">오늘의 포인트 #${i}</h3><div class="card-meta">운영자 · 조회수 ${Math.floor(Math.random()*9)}천회</div></div></div>`);</script>
+                        </div>
+                        <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
                     </div>
+
+                    <div class="carousel-wrapper">
+                        <h2 class="carousel-title">지식 UP</h2>
+                         <div class="carousel-track">
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+85}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">영업 노하우 #${i}</h3><div class="card-meta">박지식 강사 · 조회수 ${Math.floor(Math.random()*10)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
+                        </div>
+                        <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
+                    </div>
+
+                    <div class="carousel-wrapper">
+                        <h2 class="carousel-title">전산 및 언더</h2>
+                         <div class="carousel-track">
+                             <script>for(let i=1; i<=15; i++) document.write(`<div class="content-card"><div class="card-thumbnail"><img src="https://picsum.photos/250/140?random=${i+100}" alt="콘텐츠 썸네일"></div><div class="card-info"><h3 class="card-title">시스템 가이드 #${i}</h3><div class="card-meta">지원팀 · 조회수 ${Math.floor(Math.random()*2)}.${Math.floor(Math.random()*9)}만회</div></div></div>`);</script>
+                        </div>
+                        <button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button>
+                    </div>
+                </div>
                 
-                <footer><a href="#">공지사항</a><a href="#">Q&A</a></footer>
+                <footer>
+                    <a href="#">공지사항</a>
+                    <a href="#">Q&A</a>
+                </footer>
             </main>
         </div>
     </div>
 
     <script>
+        // 로그인 페이지 -> 메인 페이지 전환
         function showMainPage() {
             document.getElementById('login-page').style.display = 'none';
             document.getElementById('main-page').classList.remove('hidden');
         }
 
+        // 일반 콘텐츠 캐러셀 스크롤링
         document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
             const track = wrapper.querySelector('.carousel-track');
             const prevButton = wrapper.querySelector('.arrow-prev');
@@ -318,11 +582,20 @@
             }
         });
 
-        const menuTrigger = document.getElementById('menu-trigger'), sideMenu = document.getElementById('side-menu'), mainContent = document.querySelector('.content-wrapper');
-        menuTrigger.addEventListener('mouseenter', () => sideMenu.classList.add('active'));
-        sideMenu.addEventListener('mouseleave', () => sideMenu.classList.remove('active'));
-        mainContent.addEventListener('mouseenter', () => { if (sideMenu.classList.contains('active')) sideMenu.classList.remove('active'); });
+        // 반응형 메뉴 (데스크톱 hover, 모바일 click)
+        const sideMenu = document.getElementById('side-menu');
+        if (window.innerWidth > 768) {
+            const menuTrigger = document.getElementById('menu-trigger');
+            const mainContent = document.querySelector('.content-wrapper');
+            menuTrigger.addEventListener('mouseenter', () => sideMenu.classList.add('active'));
+            sideMenu.addEventListener('mouseleave', () => sideMenu.classList.remove('active'));
+            mainContent.addEventListener('mouseenter', () => { if (sideMenu.classList.contains('active')) sideMenu.classList.remove('active'); });
+        } else {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            mobileMenuBtn.addEventListener('click', () => sideMenu.classList.toggle('active'));
+        }
 
+        // 추천 콘텐츠(Hero) 슬라이더 자동 넘김
         document.addEventListener('DOMContentLoaded', () => {
             const track = document.querySelector('.hero-track');
             if (!track) return;
@@ -330,20 +603,36 @@
             const slides = Array.from(track.children);
             const nextButton = document.querySelector('.hero-arrow.arrow-next');
             const prevButton = document.querySelector('.hero-arrow.arrow-prev');
-            if (slides.length === 0) return;
+            if (!slides || slides.length === 0 || !nextButton || !prevButton) return;
 
-            let currentIndex = 0, intervalId = null;
-            const moveToSlide = (targetIndex) => { track.style.transform = 'translateX(-' + targetIndex * 100 + '%)'; currentIndex = targetIndex; }
-            const startAutoSlide = () => { stopAutoSlide(); intervalId = setInterval(() => { const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); }, 5000); }
-            const stopAutoSlide = () => { clearInterval(intervalId); }
-            nextButton.addEventListener('click', () => { const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); });
-            prevButton.addEventListener('click', () => { const prevIndex = (currentIndex - 1 + slides.length) % slides.length; moveToSlide(prevIndex); });
+            let currentIndex = 0;
+            let intervalId = null;
+
+            const moveToSlide = (targetIndex) => {
+                if (track) track.style.transform = 'translateX(-' + targetIndex * 100 + '%)';
+                currentIndex = targetIndex;
+            }
+
+            const startAutoSlide = () => {
+                stopAutoSlide();
+                intervalId = setInterval(() => {
+                    const nextIndex = (currentIndex + 1) % slides.length;
+                    moveToSlide(nextIndex);
+                }, 5000);
+            }
+
+            const stopAutoSlide = () => clearInterval(intervalId);
+
+            nextButton.addEventListener('click', () => { stopAutoSlide(); const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); });
+            prevButton.addEventListener('click', () => { stopAutoSlide(); const prevIndex = (currentIndex - 1 + slides.length) % slides.length; moveToSlide(prevIndex); });
+            
             track.addEventListener('mouseenter', stopAutoSlide);
             track.addEventListener('mouseleave', startAutoSlide);
+
             startAutoSlide();
         });
 
-        // 영상 팝업 재생 함수
+        // 영상 팝업 기능
         function openVideo(videoUrl) {
             const modal = document.getElementById('videoModal');
             const player = document.getElementById('videoPlayer');
@@ -357,10 +646,9 @@
             const player = document.getElementById('videoPlayer');
             modal.style.display = 'none';
             player.pause();
-            player.src = ''; // src를 비워 재사용 시 문제를 방지
+            player.src = '';
         }
 
-        // DOMContentLoaded는 스크립트가 head에 있을 때 유용하지만, body 끝에 있으므로 즉시 실행해도 무방.
         // 모든 카드에 클릭 이벤트 연결
         document.querySelectorAll('.content-card').forEach((card, index) => {
             card.addEventListener('click', () => {
