@@ -170,6 +170,66 @@
         .shorts-video-slide { width: 100%; height: 100%; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; }
         .shorts-video-slide video { height: 100%; width: auto; max-width: 100%; aspect-ratio: 9 / 16; object-fit: contain; }
         .close-shorts-btn { position: absolute; top: 30px; left: 30px; font-size: 2rem; background: rgba(255,255,255,0.2); color: white; border: none; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; z-index: 10001; }
+
+        /* --- 숏츠 UI 추가 스타일 START --- */
+        .shorts-info-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            z-index: 5;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+            max-width: calc(100% - 100px); /* 오른쪽 영역 확보 */
+        }
+        .shorts-video-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+        .shorts-video-channel {
+            font-size: 0.9rem;
+            margin: 0 0 15px 0;
+        }
+        .full-video-link {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .full-video-link:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        .swipe-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.5s ease 2.5s; /* 2.5초 후 0.5초 동안 사라짐 */
+            pointer-events: none;
+        }
+        .swipe-indicator.fade-out {
+            opacity: 0;
+        }
+        .swipe-indicator p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        /* --- 숏츠 UI 추가 스타일 END --- */
+        
         #no-results-message { color: var(--text-secondary); text-align: center; padding: 50px; font-size: 1.2rem; }
         #mobile-search-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--background-color); z-index: 5000; display: none; flex-direction: column; }
         .search-overlay-header { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid var(--card-color); }
@@ -187,7 +247,7 @@
     
     <div id="login-page">
         <div class="login-video-background">
-           <video id="login-bg-video" loop muted playsinline>
+            <video id="login-bg-video" loop muted playsinline>
                 <source src="https://player.vimeo.com/progressive_redirect/playback/1097431073/rendition/1080p/file.mp4?loc=external&signature=16e7c65b8b67cda4d65173d0d0c178dfeca4c494ee84e633895c13df3bfc1e12" type="video/mp4">
             </video>
         </div>
@@ -292,7 +352,7 @@
         } else { const mobileMenuBtn = document.querySelector('.mobile-menu-btn'); mobileMenuBtn.addEventListener('click', () => sideMenu.classList.toggle('active')); }
         document.querySelectorAll('#side-menu a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function (e) { e.preventDefault(); const targetId = this.getAttribute('href'); if (!targetId || targetId === '#') { window.scrollTo({ top: 0, behavior: 'smooth' }); } else { const targetElement = document.querySelector(targetId); if (targetElement) { targetElement.scrollIntoView({ behavior: 'smooth' }); } } document.getElementById('side-menu').classList.remove('active'); }); });
 
-     // 영상 팝업 기능
+      // 영상 팝업 기능
     function openVideo(videoUrl, startTime = 0) {
         const modal = document.getElementById('videoModal');
         const player = document.getElementById('videoPlayer');
@@ -304,7 +364,7 @@
         }, { once: true });
         modal.style.display = 'flex';
     }
-  
+   
     function closeVideo() {
         const modal = document.getElementById('videoModal');
         const player = document.getElementById('videoPlayer');
@@ -316,57 +376,81 @@
   // 숏츠 재생 기능
     const shortsModal = document.getElementById('shortsModal');
     const shortsContainer = document.querySelector('.shorts-viewer-container');
-  const sampleShortsVideos = [
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
-];
-        let shortsObserver;
+    // --- 숏츠 데이터 구조 변경 START ---
+    const sampleShortsVideos = [
+        { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', title: '핵심만 쏙쏙! 상품 개정 포인트', channel: '김흥국 강사' },
+        { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', title: '고객의 마음을 여는 아이스브레이킹', channel: '박생명 강사' },
+        { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', title: '1분 만에 끝내는 전산 입력 꿀팁', channel: '지원팀' }
+    ];
+    // --- 숏츠 데이터 구조 변경 END ---
+    let shortsObserver;
 
-function openShorts(startIndex = 0) {
-    if (!shortsContainer || !shortsModal) return;
+    // --- openShorts 함수 수정 START ---
+    function openShorts(startIndex = 0) {
+        if (!shortsContainer || !shortsModal) return;
 
-         shortsContainer.innerHTML = '';
+        shortsContainer.innerHTML = '';
 
-    // 숏츠 영상들 생성
-    sampleShortsVideos.forEach((src, index) => {
-        const slide = document.createElement('div');
-        slide.className = 'shorts-video-slide';
-        slide.style.scrollSnapAlign = 'start';
+        // 숏츠 영상들 생성
+        sampleShortsVideos.forEach((videoData, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'shorts-video-slide';
 
-        const video = document.createElement('video');
-        video.src = src;
-        video.loop = true;
-        video.playsInline = true;
-        video.muted = true;
-        video.autoplay = true;
-        video.controls = false;
-        video.setAttribute('preload', 'metadata');
-        video.style.height = '100%';
-        video.style.width = 'auto';
-        video.style.maxWidth = '100%';
-        video.style.aspectRatio = '9 / 16';
-        video.style.objectFit = 'contain';
+            const video = document.createElement('video');
+            video.src = videoData.src;
+            video.loop = true;
+            video.playsInline = true;
+            video.muted = true; // 자동재생을 위해 muted로 시작
+            video.autoplay = true;
+            video.controls = false;
+            video.setAttribute('preload', 'metadata');
+            
+            slide.appendChild(video);
 
-        slide.appendChild(video);
-        shortsContainer.appendChild(slide);
-    });
+            // 영상 정보 오버레이 추가
+            const infoOverlay = document.createElement('div');
+            infoOverlay.className = 'shorts-info-overlay';
+            infoOverlay.innerHTML = `
+                <h3 class="shorts-video-title">${videoData.title}</h3>
+                <p class="shorts-video-channel">${videoData.channel}</p>
+                <a class="full-video-link">🎬 전체 영상 보기</a>
+            `;
+            slide.appendChild(infoOverlay);
 
-     // 모달 열기
-    shortsModal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
+            // 첫번째 영상에만 스와이프 안내 메시지 추가
+            if (index === 0) {
+                const swipeIndicator = document.createElement('div');
+                swipeIndicator.className = 'swipe-indicator';
+                swipeIndicator.innerHTML = '<p>위로 스와이프하여<br>다음 영상 보기</p>';
+                slide.appendChild(swipeIndicator);
+                
+                // 3초 뒤에 fade-out 클래스 추가
+                setTimeout(() => {
+                    swipeIndicator.classList.add('fade-out');
+                }, 500); // 나타나자마자 fade-out 시작
+            }
 
-    // 스크롤 위치 이동 + 관찰자 설정
-    setTimeout(() => {
-        shortsContainer.scrollTo({
-            top: startIndex * shortsContainer.clientHeight,
-            behavior: 'instant'
+            shortsContainer.appendChild(slide);
         });
-        setupShortsObserver();
-    }, 50);
-}
 
-   function closeShorts() {
+        // 모달 열기
+        shortsModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        // 스크롤 위치 이동 + 관찰자 설정
+        setTimeout(() => {
+            if (shortsContainer.children[startIndex]) {
+                shortsContainer.scrollTo({
+                    top: startIndex * shortsContainer.clientHeight,
+                    behavior: 'instant'
+                });
+            }
+            setupShortsObserver();
+        }, 50);
+    }
+    // --- openShorts 함수 수정 END ---
+
+    function closeShorts() {
         if (!shortsModal) return;
         shortsModal.style.display = 'none';
         document.body.style.overflow = '';
@@ -385,7 +469,7 @@ function openShorts(startIndex = 0) {
         threshold: 0.8
     };
 
-   
+    
     shortsObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             const video = entry.target.querySelector('video');
