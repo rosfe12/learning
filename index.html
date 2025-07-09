@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>흥국생명 스마트러닝센터 (최종 디자인 수정본)</title>
+    <title>흥국생명 스마트러닝센터 (최종 수정본)</title>
     <style>
         :root {
             /* 흥국생명 CI 기반 "모던 퍼플" 테마 */
@@ -27,77 +27,25 @@
             overflow-x: hidden;
         }
 
-        /* 로그인 페이지 */
-        #login-page {
-            position: relative;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-        }
-        .login-video-background {
-            position: absolute;
-            top: -10px; left: -10px;
-            width: calc(100% + 20px);
-            height: calc(100% + 20px);
-            z-index: 1;
-        }
-        #login-bg-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* 2. 블러는 연하게, 밝기를 어둡게 조정 */
-            filter: blur(2px) brightness(0.6);
-        }
-        .login-video-background::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.3); /* 가독성을 위한 어두운 오버레이 */
-        }
-        .login-content {
-            position: relative;
-            z-index: 2;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            width: 100%; height: 100%;
-            text-align: center;
-        }
-        #login-page h1 { 
-            font-size: 3.5rem; 
-            font-weight: 500; 
-            margin: 2.5rem 0 0 0; /* 프로필과의 간격 */
-        }
-        .profiles { 
-            display: flex; 
-            gap: 2.5rem; 
-        }
-        .profile-icon {
-            width: 120px; height: 120px; background: linear-gradient(45deg, var(--primary-color), #8a2be2);
-            border-radius: 8px; border: 2px solid transparent; display: flex;
-            justify-content: center; align-items: center; font-size: 1.5rem;
-            font-weight: bold; color: var(--text-primary); cursor: pointer; transition: all 0.2s ease;
-            padding: 10px; box-sizing: border-box; text-align: center;
-        }
-        .profile:hover .profile-icon { transform: scale(1.05); border-color: var(--text-primary); }
-        .sound-btn {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            z-index: 3;
-            background: rgba(255,255,255,0.2);
-            border: 1px solid white;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-        }
         .hidden { display: none !important; }
-        
+
+        /* 로그인 페이지 */
+        #login-page { position: relative; height: 100vh; overflow: hidden; display: flex; }
+        .login-video-background { position: absolute; top: -10px; left: -10px; width: calc(100% + 20px); height: calc(100% + 20px); z-index: 1; }
+        #login-bg-video { width: 100%; height: 100%; object-fit: cover; filter: blur(2px) brightness(0.6); }
+        .login-video-background::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.3); }
+        .login-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; text-align: center; }
+        #login-page h1 { font-size: 3.5rem; font-weight: 500; margin: 2.5rem 0 0 0; }
+        .profiles { display: flex; gap: 2.5rem; }
+        .profile-icon { width: 120px; height: 120px; background: linear-gradient(45deg, var(--primary-color), #8a2be2); border-radius: 8px; border: 2px solid transparent; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: bold; color: var(--text-primary); cursor: pointer; transition: all 0.2s ease; padding: 10px; box-sizing: border-box; text-align: center; }
+        .profile:hover .profile-icon { transform: scale(1.05); border-color: var(--text-primary); }
+        .sound-btn { position: absolute; bottom: 30px; right: 30px; z-index: 3; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; }
+
+        /* 메인 페이지 레이아웃 */
         #main-page { display: flex; }
-        #menu-trigger { position: fixed; left: 0; top: 0; bottom: 0; width: 25px; z-index: 2001; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity 0.3s ease; }
+        #menu-trigger { position: fixed; left: 0; top: 0; bottom: 0; width: 25px; z-index: 11500; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity 0.3s ease; }
         #menu-trigger span { writing-mode: vertical-rl; background-color: rgba(0,0,0,0.3); padding: 15px 5px; border-radius: 0 5px 5px 0; font-size: 14px; color: var(--text-secondary); }
-        #side-menu { width: 240px; background-color: #1c1430; height: 100vh; position: fixed; left: 0; top: 0; transform: translateX(-240px); transition: transform 0.3s ease; z-index: 3000; overflow-y: auto; display: flex; flex-direction: column; }
+        #side-menu { width: 240px; background-color: #1c1430; height: 100vh; position: fixed; left: 0; top: 0; transform: translateX(-240px); transition: transform 0.3s ease; z-index: 12000; overflow-y: auto; display: flex; flex-direction: column; }
         #side-menu.active { transform: translateX(0); }
         #side-menu.active + #menu-trigger { opacity: 0; pointer-events: none; }
         .menu-header { padding: 20px 24px; font-size: 1.1rem; font-weight: bold; color: var(--primary-color); border-bottom: 1px solid var(--card-color); margin-top: 68px; }
@@ -105,7 +53,6 @@
         #side-menu nav ul { list-style: none; padding: 0; margin: 0; }
         #side-menu nav a { display: flex; align-items: center; gap: 20px; padding: 12px 24px; text-decoration: none; color: var(--text-secondary); font-size: 0.9rem; }
         #side-menu nav a:hover { background-color: var(--card-color); color: var(--text-primary); }
-        
         .content-wrapper { width: 100%; }
         header { display: flex; align-items: center; justify-content: space-between; padding: 0 2%; height: 68px; background: linear-gradient(to bottom, rgba(39,28,66,0.8) 10%, rgba(39,28,66,0)); position: fixed; top: 0; width: 96%; z-index: 1000; }
         .header-left { flex: 1; display: flex; justify-content: flex-start; }
@@ -119,9 +66,11 @@
         #current-profile-icon { width: 36px; height: 36px; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-weight: bold; cursor: pointer; font-size: 1rem; background: linear-gradient(45deg, var(--primary-color), #8a2be2); }
         .mobile-menu-btn, .mobile-search-btn { display: none; }
         main { padding-top: 68px; }
+        
+        /* 메인 캐러셀 & 히어로 */
         .hero-section { height: 56.25vw; max-height: 80vh; width: 100%; position: relative; overflow: hidden; }
         .hero-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
-        .hero-slide { min-width: 100%; height: 100%; background-size: cover; background-position: center; position: relative; display: flex; align-items: center; }
+        .hero-slide { min-width: 100%; height: 100%; background-size: cover; background-position: center; position: relative; display: flex; align-items: center; cursor: pointer; }
         .hero-slide::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to right, rgba(39,28,66,0.8) 20%, transparent 80%); }
         .hero-info { padding-left: 4%; max-width: 40%; position: relative; z-index: 2; }
         .hero-info h2 { font-size: 3vw; margin: 0; }
@@ -130,120 +79,107 @@
         .hero-section:hover .hero-arrow { opacity: 1; }
         .hero-arrow.arrow-prev { left: 20px; }
         .hero-arrow.arrow-next { right: 20px; }
-        .content-carousel { padding: 0; margin-top: 50px; }
+        #main-carousel-container { padding: 0; margin-top: 50px; }
         .carousel-wrapper { position: relative; }
         .carousel-wrapper:hover .carousel-arrow { opacity: 1; }
-        .carousel-title { font-size: 1.4rem; color: var(--primary-color); font-weight: 500; margin: 50px 0 15px; padding: 0 4%; }
+        .carousel-header { display: flex; align-items: center; margin: 50px 0 15px; padding: 0 4%; }
+        .carousel-title { font-size: 1.4rem; color: var(--primary-color); font-weight: 500; margin: 0; }
+        .view-all-link { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: bold; cursor: pointer; margin-left: 15px; }
+        .view-all-link:hover { color: var(--text-primary); }
         .carousel-track { display: flex; overflow-x: auto; padding: 10px 4%; scroll-behavior: smooth; scrollbar-width: none; min-height: 220px; }
         .carousel-track::-webkit-scrollbar { display: none; }
-        .carousel-arrow { position: absolute; top: calc(50% + 15px); transform: translateY(-50%); background-color: rgba(0,0,0,0.3); color: white; border: none; width: 50px; height: calc(100% - 50px); cursor: pointer; z-index: 20; font-size: 2.5rem; opacity: 0; transition: opacity 0.3s ease; display: flex; justify-content: center; align-items: center; }
+        .carousel-arrow { position: absolute; top: calc(50% + 15px); transform: translateY(-50%); background-color: rgba(0,0,0,0.3); color: white; border: none; width: 50px; height: calc(100% - 30px); cursor: pointer; z-index: 20; font-size: 2.5rem; opacity: 0; transition: opacity 0.3s ease; display: flex; justify-content: center; align-items: center; }
         .carousel-arrow.arrow-prev { left: 0; }
         .carousel-arrow.arrow-next { right: 0; }
-        .content-card { min-width: 250px; margin-right: 10px; background-color: var(--card-color); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s ease; }
+        
+        /* 콘텐츠 카드 (공통) */
+        .content-card { background-color: var(--card-color); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s ease; }
         .content-card:hover { transform: scale(1.05); }
-        .card-thumbnail { width: 100%; height: 140px; background-color: #5a4b8c; overflow: hidden; position: relative; }
-        .card-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+        .card-thumbnail {width: 100%; position: relative;}
+        .card-thumbnail img {width: 100%; height: 100%; object-fit: cover;}
         .card-info { padding: 15px; }
         .card-title { font-size: 1rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-meta { font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; }
-        .shorts-card { min-width: 160px; }
-        .shorts-card .card-thumbnail { height: 280px; }
-        .progress-bar-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 5px; background-color: rgba(255, 255, 255, 0.2); display: none; }
-        .progress-bar { height: 100%; background-color: var(--primary-color); border-radius: 0 2px 2px 0; }
-        .play-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; pointer-events: none; }
-        .continue-watching-text { color: white; background-color: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid rgba(255,255,255,0.5); }
-        .content-card.is-in-progress .play-overlay { display: flex; }
         .bookmark-btn { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.5); border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; z-index: 3; font-size: 20px; line-height: 32px; text-align: center; transition: transform 0.2s ease; }
         .bookmark-btn:hover { transform: scale(1.1); }
         .bookmark-btn::before { content: '♡'; color: white; }
         .bookmark-btn.bookmarked::before { content: '❤️'; }
-        .empty-bookmark-message { color: var(--text-secondary); padding: 20px 4%; }
-        footer { padding: 50px 4%; border-top: 1px solid var(--card-color); margin-top: 30px; display: flex; gap: 30px; justify-content: center; align-items: center; }
-        footer a { color: var(--text-secondary); text-decoration: none; }
-        #videoModal, #shortsModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; justify-content: center; align-items: center; }
-        #videoModal { background: rgba(0,0,0,0.85); }
-        #shortsModal { background-color: #000; z-index: 10000; }
-        #videoPlayer { max-width: 90%; max-height: 80%; border-radius: 8px; background: black; }
-        .close-video-btn { position: absolute; top: 20px; right: 20px; font-size: 2.5rem; background: none; color: white; border: none; cursor: pointer; }
+        
+        /* 캐러셀 카드 */
+        .carousel-track .content-card { min-width: 250px; margin-right: 10px; }
+        .carousel-track .card-thumbnail { height: 140px; background-color: #5a4b8c; }
+        .carousel-track .shorts-card { min-width: 160px; }
+        .carousel-track .shorts-card .card-thumbnail { height: 280px; }
+
+        /* 게시판 그리드 뷰 */
+        #grid-view-container { padding: 0 4%; }
+        .grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .grid-header h2 { font-size: 1.8rem; color: var(--primary-color); margin: 0; }
+        .grid-back-btn { background: var(--card-color); color: var(--text-primary); border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .content-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .content-grid .content-card { margin: 0; }
+        .content-grid .card-thumbnail { height: 170px; background-color: #5a4b8c; }
+        .content-grid .shorts-card .card-thumbnail { height: 450px; }
+        
+        /* 팝업, 상세/게시판 페이지 */
+        #videoModal { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9998; justify-content: center; align-items: center; background: rgba(0,0,0,0.85); }
+        .video-modal-content { width: 90%; max-width: 1000px; max-height: 90vh; background-color: var(--background-color); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+        #videoPlayer { width: 100%; background: black; }
+        .video-player-footer { padding: 15px 20px; text-align: right; background-color: var(--card-color); }
+        .details-btn { background-color: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: 5px; font-size: 1rem; font-weight: bold; cursor: pointer; }
+        .close-video-btn { position: absolute; top: 20px; right: 20px; font-size: 2.5rem; background: none; color: white; border: none; cursor: pointer; z-index: 9999; }
+        
+        #shortsModal { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; z-index: 10000; justify-content: center; align-items: center; }
         .shorts-viewer-container { width: 100%; height: 100%; overflow-y: scroll; scroll-snap-type: y mandatory; }
         .shorts-viewer-container::-webkit-scrollbar { display: none; }
         .shorts-video-slide { width: 100%; height: 100%; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; }
         .shorts-video-slide video { height: 100%; width: auto; max-width: 100%; aspect-ratio: 9 / 16; object-fit: contain; }
         .close-shorts-btn { position: absolute; top: 30px; left: 30px; font-size: 2rem; background: rgba(255,255,255,0.2); color: white; border: none; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; z-index: 10001; }
+        .shorts-info-overlay { position: absolute; bottom: 80px; left: 20px; color: white; z-index: 5; text-shadow: 1px 1px 3px rgba(0,0,0,0.7); max-width: calc(100% - 100px); }
+        .shorts-video-title { font-size: 1rem; font-weight: bold; margin: 0 0 5px 0; }
+        .shorts-video-channel { font-size: 0.9rem; margin: 0 0 15px 0; }
+        .full-video-link { background-color: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.5); color: white; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 0.8rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s ease; }
+        .full-video-link:hover { background-color: rgba(255, 255, 255, 0.4); }
+        .swipe-indicator-up, .swipe-indicator-down { position: absolute; left: 50%; transform: translateX(-50%); z-index: 10; color: rgba(255, 255, 255, 0.7); text-align: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); font-size: 0.9rem; cursor: pointer; transition: color 0.2s ease; }
+        .swipe-indicator-up:hover, .swipe-indicator-down:hover { color: rgba(255, 255, 255, 1); }
+        .swipe-indicator-up { top: 70px; }
+        .swipe-indicator-down { bottom: 20px; }
+        .swipe-indicator-up p, .swipe-indicator-down p { margin: 0; }
+        .swipe-indicator-down .arrow, .swipe-indicator-up .arrow { margin-bottom: 5px; }
 
-        /* --- 숏츠 UI 추가/수정 스타일 START --- */
-        .shorts-info-overlay {
-            position: absolute;
-            bottom: 60px; /* 하단 스와이프 안내와 겹치지 않게 위치 조정 */
-            left: 20px;
-            color: white;
-            z-index: 5;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-            max-width: calc(100% - 100px); /* 오른쪽 영역 확보 */
-        }
-        .shorts-video-title {
-            font-size: 1rem;
-            font-weight: bold;
-            margin: 0 0 5px 0;
-        }
-        .shorts-video-channel {
-            font-size: 0.9rem;
-            margin: 0 0 15px 0;
-        }
-        .full-video-link {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .full-video-link:hover {
-            background-color: rgba(255, 255, 255, 0.4);
-        }
-        .swipe-indicator-up, .swipe-indicator-down {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            color: rgba(255, 255, 255, 0.7);
-            text-align: center;
-            pointer-events: none;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            font-size: 0.9rem;
-        }
-        .swipe-indicator-up {
-            top: 70px;
-        }
-        .swipe-indicator-down {
-            bottom: 20px;
-        }
-        .swipe-indicator-up p, .swipe-indicator-down p {
-            margin: 0;
-        }
-        .swipe-indicator-down .arrow {
-             margin-bottom: 5px;
-        }
-        .swipe-indicator-up .arrow {
-             margin-bottom: 5px;
-        }
-        /* --- 숏츠 UI 추가/수정 스타일 END --- */
+        #detail-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--background-color); z-index: 11000; overflow-y: auto; }
+        .detail-page-content { max-width: 900px; margin: 0 auto; padding: 30px; }
+        .detail-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-color); padding-bottom: 15px; margin-bottom: 25px; }
+        .detail-header h2 { margin: 0; font-size: 1.8rem; color: var(--primary-color); }
+        .detail-header-btns { display: flex; gap: 10px; }
+        .back-to-list-btn, .back-to-main-btn { background: var(--card-color); color: var(--text-primary); border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        #detail-video-container { width: 100%; margin-bottom: 25px; }
+        #detail-video-container video { width: 100%; border-radius: 8px; background-color: black; }
+        .detail-section { margin-bottom: 40px; }
+        .detail-section-title { font-size: 1.4rem; font-weight: bold; margin: 0 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid var(--primary-color); }
+        .file-item { display: flex; justify-content: space-between; align-items: center; background-color: var(--card-color); padding: 15px; border-radius: 5px; margin-bottom: 10px; }
+        .file-item span { color: var(--text-primary); text-decoration: none; }
+        .file-download-btn { background-color: var(--primary-color); color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9rem; }
+        .comment-input-area { display: flex; gap: 10px; margin-bottom: 20px; }
+        .comment-input-area textarea { flex-grow: 1; background-color: var(--card-color); border: 1px solid var(--text-secondary); border-radius: 5px; padding: 10px; color: var(--text-primary); font-size: 1rem; min-height: 60px; resize: vertical; }
+        .comment-input-area button { background-color: var(--primary-color); color: white; padding: 0 25px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .comment-item { display: flex; gap: 15px; padding: 15px 0; border-bottom: 1px solid var(--card-color); }
+        .comment-avatar { font-size: 1.5rem; }
+        .comment-content { flex-grow: 1; }
+        .comment-header { display: flex; align-items: center; margin-bottom: 5px; }
+        .comment-author { font-weight: bold; font-size: 1rem; }
+        .comment-date { font-size: 0.8rem; color: var(--text-secondary); margin-left: 10px; }
+        .comment-text { margin-top: 5px; }
         
+        /* 기타 */
         #no-results-message { color: var(--text-secondary); text-align: center; padding: 50px; font-size: 1.2rem; }
         #mobile-search-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--background-color); z-index: 5000; display: none; flex-direction: column; }
-        .search-overlay-header { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid var(--card-color); }
-        .search-overlay-input { flex-grow: 1; background-color: var(--card-color); border: 1px solid var(--text-secondary); border-radius: 8px; padding: 12px; font-size: 1rem; color: var(--text-primary); }
-        .search-overlay-close { background: none; border: none; color: var(--text-secondary); font-size: 1rem; padding: 12px; cursor: pointer; }
-        .search-overlay-results { flex-grow: 1; overflow-y: auto; padding: 20px; }
-        .search-result-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; background-color: var(--card-color); padding: 10px; border-radius: 8px; cursor: pointer; }
-        .search-result-item img { width: 100px; height: 60px; object-fit: cover; border-radius: 4px; }
-        .search-result-info h3 { margin: 0 0 5px 0; font-size: 1rem; }
-        .search-result-info p { margin: 0; font-size: 0.8rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { html { scroll-padding-top: 58px; } #login-page h1 { font-size: 8vw; } .profiles { gap: 3vw; flex-wrap: wrap; justify-content: center; padding: 0 5vw; } .profile-icon { width: 40vw; height: 40vw; font-size: 2rem; } .header-center, .header-right .user-name, .header-right .visit-stats, #current-profile-icon { display: none; } .header-left { flex: initial; } .header-right { flex: initial; } .site-logo { font-size: 1.2rem; } .mobile-menu-btn, .mobile-search-btn { display: block; font-size: 24px; background: none; color: var(--text-primary); border: none; cursor: pointer; } #menu-trigger { display: none; } .hero-info { max-width: 80%; } .hero-info h2 { font-size: 6vw; } .hero-info p { font-size: 3vw; } .hero-arrow, .carousel-arrow { display: none; } .content-card { min-width: 180px; } .shorts-card { min-width: 120px; } .carousel-title { font-size: 1.2rem; } .card-title { font-size: 0.9rem; } .card-meta { font-size: 0.7rem; } }
+        
+        @media (max-width: 768px) { 
+            html { scroll-padding-top: 58px; } #login-page h1 { font-size: 8vw; } .profiles { gap: 3vw; flex-wrap: wrap; justify-content: center; padding: 0 5vw; } .profile-icon { width: 40vw; height: 40vw; font-size: 2rem; } .header-center, .header-right .user-name, .header-right .visit-stats, #current-profile-icon { display: none; } .header-left { flex: initial; } .header-right { flex: initial; } .site-logo { font-size: 1.2rem; } .mobile-menu-btn, .mobile-search-btn { display: block; font-size: 24px; background: none; color: var(--text-primary); border: none; cursor: pointer; } #menu-trigger { display: none; } .hero-info { max-width: 80%; } .hero-info h2 { font-size: 6vw; } .hero-info p { font-size: 3vw; } .hero-arrow, .carousel-arrow { display: none; } .carousel-track .content-card { min-width: 180px; } .carousel-track .shorts-card { min-width: 120px; } .carousel-title { font-size: 1.2rem; } .card-title { font-size: 0.9rem; } .card-meta { font-size: 0.7rem; }
+            .content-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+            .content-grid .shorts-card .card-thumbnail { height: 300px; }
+        }
     </style>
 </head>
 <body>
@@ -266,39 +202,57 @@
         <button id="mute-toggle-btn" class="sound-btn">🔇</button>
     </div>
 
-    <div id="videoModal"><video id="videoPlayer" controls><source src="" type="video/mp4"></video><button onclick="closeVideo()" class="close-video-btn">×</button></div>
-    <div id="shortsModal"><div class="shorts-viewer-container"></div><button onclick="closeShorts()" class="close-shorts-btn">×</button></div>
-    <div id="mobile-search-overlay">
-        <div class="search-overlay-header">
-            <input type="search" class="search-overlay-input" placeholder="학습할 내용을 검색해 보세요...">
-            <button class="search-overlay-close">취소</button>
+    <div id="videoModal" class="hidden">
+        <div class="video-modal-content">
+            <video id="videoPlayer" controls controlslist="nodownload"></video>
+            <div class="video-player-footer">
+                <button class="details-btn" onclick="showDetailPage()">자세히 보기</button>
+            </div>
         </div>
-        <div class="search-overlay-results"></div>
+        <button onclick="closeVideo()" class="close-video-btn">×</button>
     </div>
 
+    <div id="shortsModal" class="hidden"><div class="shorts-viewer-container"></div><button onclick="closeShorts()" class="close-shorts-btn">×</button></div>
+    
+    <div id="detail-page" class="hidden">
+        <div class="detail-page-content">
+            <header class="detail-header">
+                <h2>콘텐츠 상세</h2>
+                <div class="detail-header-btns">
+                    <button class="back-to-list-btn" onclick="hideDetailPage()">목록으로</button>
+                    <button class="back-to-main-btn" onclick="goToMain()">메인으로</button>
+                </div>
+            </header>
+            <main>
+                <div id="detail-video-container"></div>
+                <section class="detail-section"><h3 class="detail-section-title">학습 정보</h3><p id="detail-description">이 영상은 고객의 마음을 사로잡는 비결을 공개하는 명품 강의입니다. 달라진 보장 내용과 핵심 판매 포인트를 영상 하나로 끝내세요!</p></section>
+                <section class="detail-section"><h3 class="detail-section-title">첨부파일</h3><div id="detail-files-list"><div class="file-item"><span>📜 7월 개정 상품 핵심 요약.pdf</span><button class="file-download-btn">다운로드</button></div><div class="file-item"><span>📑 고객 상담 스크립트.docx</span><button class="file-download-btn">다운로드</button></div></div></section>
+                <section class="detail-section"><h3 class="detail-section-title">댓글</h3><div class="comment-input-area"><textarea placeholder="댓글을 입력하세요..."></textarea><button>등록</button></div><div id="detail-comments-list"><div class="comment-item"><div class="comment-avatar">👤</div><div class="comment-content"><div class="comment-header"><span class="comment-author">김흥국</span><span class="comment-date">2025.07.08</span></div><p class="comment-text">이번 강의 정말 유익하네요! 특히 스크립트가 많은 도움이 되었습니다.</p></div></div><div class="comment-item"><div class="comment-avatar">👤</div><div class="comment-content"><div class="comment-header"><span class="comment-author">박생명</span><span class="comment-date">2025.07.08</span></div><p class="comment-text">자료 감사합니다!</p></div></div></div></section>
+            </main>
+        </div>
+    </div>
+    
+    <aside id="side-menu">
+        <div class="menu-header">흥국생명 With You</div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="goToMain(event)">🏠 홈</a></li>
+                <li><a href="#hero-section">⭐ 추천 콘텐츠</a></li>
+                <li><a href="#section-shorts">🎬 숏츠</a></li>
+                <li><a href="#section-new">✨ 신규 콘텐츠</a></li>
+                <li><a href="#section-best">🏆 베스트 콘텐츠</a></li>
+                <li><a href="#section-products">💼 상품</a></li>
+                <li><a href="#section-points">📌 오늘의 상품 포인트</a></li>
+                <li><a href="#section-knowledge">💡 지식 UP</a></li>
+                <li><a href="#section-it">💻 전산 및 언더</a></li>
+                <li><a href="#section-bookmarked">❤️ 찜한 콘텐츠</a></li>
+                <li><a href="#footer">📢 공지사항</a></li>
+                <li><a href="#footer">❓ Q&A</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <div id="menu-trigger"><span>메뉴 보기</span></div>
     <div id="main-page" class="hidden">
-        <aside id="side-menu">
-            <div class="menu-header">흥국생명 With You</div>
-            <nav>
-                <ul>
-                    <li><a href="#main-page">🏠 홈</a></li>
-                    <li><a href="#hero-section">⭐ 추천 콘텐츠</a></li>
-                    <li><a href="#section-shorts">🎬 숏츠</a></li>
-                    <li><a href="#section-new">✨ 신규 콘텐츠</a></li>
-                    <li><a href="#section-best">🏆 베스트 콘텐츠</a></li>
-                    <li><a href="#section-products">💼 상품</a></li>
-                    <li><a href="#section-points">📌 오늘의 상품 포인트</a></li>
-                    <li><a href="#section-knowledge">💡 지식 UP</a></li>
-                    <li><a href="#section-it">💻 전산 및 언더</a></li>
-                    <li><a href="#section-bookmarked">❤️ 찜한 콘텐츠</a></li>
-                    <li><a href="#footer">📢 공지사항</a></li>
-                    <li><a href="#footer">❓ Q&A</a></li>
-                </ul>
-            </nav>
-        </aside>
-        
-        <div id="menu-trigger"><span>메뉴 보기</span></div>
-
         <div class="content-wrapper">
             <header>
                 <div class="header-left"><div class="site-logo">흥국생명 With You</div></div>
@@ -315,25 +269,27 @@
             <main>
                 <section id="hero-section" class="hero-section">
                     <div class="hero-track">
-                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=1');"><div class="hero-info"><h2>필수 시청! 7월 개정 상품 완전정복</h2><p>달라진 보장 내용과 핵심 판매 포인트를 영상 하나로 끝내세요.</p></div></div>
-                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=2');"><div class="hero-info"><h2>고객 감동을 이끄는 상담 노하우</h2><p>평범한 상담을 넘어 고객의 마음을 사로잡는 비결을 공개합니다.</p></div></div>
-                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=3');"><div class="hero-info"><h2>신입을 위한 영업 성공 가이드</h2><p>이제 막 시작하는 당신을 위해 준비했습니다. A부터 Z까지!</p></div></div>
+                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=1');" onclick="openVideo('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4')"><div class="hero-info"><h2>필수 시청! 7월 개정 상품 완전정복</h2><p>달라진 보장 내용과 핵심 판매 포인트를 영상 하나로 끝내세요.</p></div></div>
+                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=2');" onclick="openVideo('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4')"><div class="hero-info"><h2>고객 감동을 이끄는 상담 노하우</h2><p>평범한 상담을 넘어 고객의 마음을 사로잡는 비결을 공개합니다.</p></div></div>
+                        <div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=3');" onclick="openVideo('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4')"><div class="hero-info"><h2>신입을 위한 영업 성공 가이드</h2><p>이제 막 시작하는 당신을 위해 준비했습니다. A부터 Z까지!</p></div></div>
                     </div>
                     <button class="hero-arrow arrow-prev">‹</button>
                     <button class="hero-arrow arrow-next">›</button>
                 </section>
                 
-                <div class="content-carousel">
-                    <div id="section-shorts" class="carousel-wrapper"><h2 class="carousel-title">숏츠 모음</h2><div class="carousel-track" data-track-id="shorts"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
-                    <div id="section-new" class="carousel-wrapper"><h2 class="carousel-title">신규 콘텐츠</h2><div class="carousel-track" data-track-id="new"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
-                    <div id="section-best" class="carousel-wrapper"><h2 class="carousel-title">베스트 콘텐츠</h2><div class="carousel-track" data-track-id="best"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
-                    <div id="section-products" class="carousel-wrapper"><h2 class="carousel-title">상품</h2><div class="carousel-track" data-track-id="products"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
-                    <div id="section-points" class="carousel-wrapper"><h2 class="carousel-title">오늘의 상품 포인트</h2><div class="carousel-track" data-track-id="points"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
-                    <div id="section-knowledge" class="carousel-wrapper"><h2 class="carousel-title">지식 UP</h2><div class="carousel-track" data-track-id="knowledge"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
-                    <div id="section-it" class="carousel-wrapper"><h2 class="carousel-title">전산 및 언더</h2><div class="carousel-track" data-track-id="it"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
-                    <div id="section-bookmarked" class="carousel-wrapper"><h2 class="carousel-title">찜한 콘텐츠</h2><div class="carousel-track" data-track-id="bookmarked"><p class="empty-bookmark-message">아직 찜한 콘텐츠가 없습니다. ❤️ 아이콘을 눌러 원하는 콘텐츠를 추가해 보세요!</p></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                <div id="main-carousel-container">
+                    <div id="section-shorts" class="carousel-wrapper"><div class="carousel-header"><h2 class="carousel-title">숏츠 모음</h2><a class="view-all-link" data-category="shorts">전체 보기 &gt;</a></div><div class="carousel-track" data-track-id="shorts"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-new" class="carousel-wrapper"><div class="carousel-header"><h2 class="carousel-title">신규 콘텐츠</h2><a class="view-all-link" data-category="new">전체 보기 &gt;</a></div><div class="carousel-track" data-track-id="new"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-best" class="carousel-wrapper"><div class="carousel-header"><h2 class="carousel-title">베스트 콘텐츠</h2><a class="view-all-link" data-category="best">전체 보기 &gt;</a></div><div class="carousel-track" data-track-id="best"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-products" class="carousel-wrapper"><div class="carousel-header"><h2 class="carousel-title">상품</h2><a class="view-all-link" data-category="products">전체 보기 &gt;</a></div><div class="carousel-track" data-track-id="products"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-points" class="carousel-wrapper"><div class="carousel-header"><h2 class="carousel-title">오늘의 상품 포인트</h2><a class="view-all-link" data-category="points">전체 보기 &gt;</a></div><div class="carousel-track" data-track-id="points"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-knowledge" class="carousel-wrapper"><div class="carousel-header"><h2 class="carousel-title">지식 UP</h2><a class="view-all-link" data-category="knowledge">전체 보기 &gt;</a></div><div class="carousel-track" data-track-id="knowledge"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-it" class="carousel-wrapper"><div class="carousel-header"><h2 class="carousel-title">전산 및 언더</h2><a class="view-all-link" data-category="it">전체 보기 &gt;</a></div><div class="carousel-track" data-track-id="it"></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
+                    <div id="section-bookmarked" class="carousel-wrapper"><div class="carousel-header"><h2 class="carousel-title">찜한 콘텐츠</h2></div><div class="carousel-track" data-track-id="bookmarked"><p class="empty-bookmark-message">아직 찜한 콘텐츠가 없습니다. ❤️ 아이콘을 눌러 원하는 콘텐츠를 추가해 보세요!</p></div><button class="carousel-arrow arrow-prev">‹</button><button class="carousel-arrow arrow-next">›</button></div>
                 </div>
                 
+                <div id="grid-view-container" class="hidden"></div>
+
                 <div id="no-results-message" class="hidden">
                     <p style="font-size: 2rem; margin: 0;">🤔</p>
                     <p>검색 결과가 없습니다.</p>
@@ -347,179 +303,396 @@
         </div>
     </div>
 
-    <script>
-        let allCardsData = {}; let bookmarkedItems = new Set();
-        function showMainPage(profileName) { document.getElementById('login-page').style.display = 'none'; document.getElementById('main-page').classList.remove('hidden'); const profileIconInHeader = document.getElementById('current-profile-icon'); if (profileIconInHeader) { profileIconInHeader.textContent = profileName.substring(0, 2); } }
-        function returnToLogin() { document.getElementById('main-page').classList.add('hidden'); document.getElementById('login-page').style.display = 'flex'; const bgVideo = document.getElementById('login-bg-video'); if(bgVideo) bgVideo.play().catch(e => {}); }
-        const sideMenu = document.getElementById('side-menu'); if (window.innerWidth > 768) { const menuTrigger = document.getElementById('menu-trigger'); const mainContent = document.querySelector('.content-wrapper'); menuTrigger.addEventListener('mouseenter', () => sideMenu.classList.add('active')); sideMenu.addEventListener('mouseleave', () => sideMenu.classList.remove('active')); mainContent.addEventListener('mouseenter', () => { if (sideMenu.classList.contains('active')) sideMenu.classList.remove('active'); });
-        } else { const mobileMenuBtn = document.querySelector('.mobile-menu-btn'); mobileMenuBtn.addEventListener('click', () => sideMenu.classList.toggle('active')); }
-        document.querySelectorAll('#side-menu a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function (e) { e.preventDefault(); const targetId = this.getAttribute('href'); if (!targetId || targetId === '#') { window.scrollTo({ top: 0, behavior: 'smooth' }); } else { const targetElement = document.querySelector(targetId); if (targetElement) { targetElement.scrollIntoView({ behavior: 'smooth' }); } } document.getElementById('side-menu').classList.remove('active'); }); });
-
-      // 영상 팝업 기능
-    function openVideo(videoUrl, startTime = 0) {
-        const modal = document.getElementById('videoModal');
-        const player = document.getElementById('videoPlayer');
-        player.src = videoUrl;
-        player.addEventListener('canplay', function onCanPlay() {
-            player.currentTime = startTime;
-            setTimeout(() => player.play(), 50);
-            player.removeEventListener('canplay', onCanPlay);
-        }, { once: true });
-        modal.style.display = 'flex';
-    }
-   
-    function closeVideo() {
-        const modal = document.getElementById('videoModal');
-        const player = document.getElementById('videoPlayer');
-        modal.style.display = 'none';
-        player.pause();
-        player.src = '';
-    }
-
-    // 숏츠 재생 기능
-    const shortsModal = document.getElementById('shortsModal');
-    const shortsContainer = document.querySelector('.shorts-viewer-container');
-    const sampleShortsVideos = [
-        { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', title: '핵심만 쏙쏙! 상품 개정 포인트', channel: '김흥국 강사' },
-        { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', title: '고객의 마음을 여는 아이스브레이킹', channel: '박생명 강사' },
-        { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', title: '1분 만에 끝내는 전산 입력 꿀팁', channel: '지원팀' }
-    ];
-    let shortsObserver;
-
-    // --- openShorts 함수 수정 START ---
-    function openShorts(startIndex = 0) {
-        if (!shortsContainer || !shortsModal) return;
-
-        shortsContainer.innerHTML = '';
-
-        // 숏츠 영상들 생성
-        const totalVideos = sampleShortsVideos.length;
-        sampleShortsVideos.forEach((videoData, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'shorts-video-slide';
-
-            const video = document.createElement('video');
-            video.src = videoData.src;
-            video.loop = true;
-            video.playsInline = true;
-            video.muted = true; // 자동재생을 위해 muted로 시작
-            video.autoplay = true;
-            video.controls = false;
-            video.setAttribute('preload', 'metadata');
-            
-            slide.appendChild(video);
-
-            // 영상 정보 오버레이 추가
-            const infoOverlay = document.createElement('div');
-            infoOverlay.className = 'shorts-info-overlay';
-            infoOverlay.innerHTML = `
-                <h3 class="shorts-video-title">${videoData.title}</h3>
-                <p class="shorts-video-channel">${videoData.channel}</p>
-                <a class="full-video-link">🎬 전체 영상 보기</a>
-            `;
-            slide.appendChild(infoOverlay);
-
-            // 위로 스와이프 안내
-            const swipeUpIndicator = document.createElement('div');
-            swipeUpIndicator.className = 'swipe-indicator-up';
-            swipeUpIndicator.innerHTML = `<p class="arrow">▲</p><p>이전 영상</p>`;
-            if (index === 0) {
-                swipeUpIndicator.classList.add('hidden'); // 첫 영상이면 숨김
-            }
-            slide.appendChild(swipeUpIndicator);
-
-            // 아래로 스와이프 안내
-            const swipeDownIndicator = document.createElement('div');
-            swipeDownIndicator.className = 'swipe-indicator-down';
-            swipeDownIndicator.innerHTML = `<p class="arrow">▼</p><p>다음 영상</p>`;
-            if (index === totalVideos - 1) {
-                swipeDownIndicator.classList.add('hidden'); // 마지막 영상이면 숨김
-            }
-            slide.appendChild(swipeDownIndicator);
-
-            shortsContainer.appendChild(slide);
-        });
-
-        // 모달 열기
-        shortsModal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-
-        // 스크롤 위치 이동 + 관찰자 설정
-        setTimeout(() => {
-            if (shortsContainer.children[startIndex]) {
-                shortsContainer.scrollTo({
-                    top: startIndex * shortsContainer.clientHeight,
-                    behavior: 'instant'
-                });
-            }
-            setupShortsObserver();
-        }, 50);
-    }
-    // --- openShorts 함수 수정 END ---
-
-    function closeShorts() {
-        if (!shortsModal) return;
-        shortsModal.style.display = 'none';
-        document.body.style.overflow = '';
-        if (shortsContainer) {
-            shortsContainer.querySelectorAll('video').forEach(v => v.pause());
-            shortsContainer.innerHTML = '';
+ <script>
+        let allCardsData = {};
+        let bookmarkedItems = new Set();
+        
+        // --- 페이지 관리 함수 ---
+        function showMainPage(profileName) {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('main-page').classList.remove('hidden');
+            const profileIconInHeader = document.getElementById('current-profile-icon');
+            if (profileIconInHeader) profileIconInHeader.textContent = profileName.substring(0, 2);
         }
-        if (shortsObserver) shortsObserver.disconnect();
-    }
 
-  function setupShortsObserver() {
-    if (shortsObserver) shortsObserver.disconnect();
+        function returnToLogin() {
+            document.getElementById('main-page').classList.add('hidden');
+            document.getElementById('login-page').style.display = 'flex';
+            const bgVideo = document.getElementById('login-bg-video');
+            if (bgVideo) bgVideo.play().catch(e => {});
+        }
+        
+        function goToMain(event) {
+            if (event) event.preventDefault();
 
-    const options = {
-        root: shortsContainer,
-        threshold: 0.8
-    };
+            const detailPage = document.getElementById('detail-page');
+            const videoModal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            const videoModalContent = videoModal.querySelector('.video-modal-content');
 
-    
-    shortsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const video = entry.target.querySelector('video');
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    video.play().catch(() => {});
-                }, 50);
-            } else {
-                video.pause();
-                video.currentTime = 0;
+            // ▼▼▼ 오류 수정의 핵심 부분 ▼▼▼
+            // 상세 페이지에 플레이어가 남아있다면, 먼저 원래의 비디오 팝업창으로 되돌립니다.
+            if (player && detailPage.contains(player)) {
+                videoModalContent.insertBefore(player, videoModalContent.firstChild);
             }
-        });
-    }, options);
+            // ▲▲▲ 오류 수정의 핵심 부분 ▲▲▲
+            
+            // 모든 뷰와 모달을 숨김
+            detailPage.classList.add('hidden');
+            videoModal.classList.add('hidden');
+            document.getElementById('shortsModal').classList.add('hidden');
+            
+            if (player) {
+                player.pause();
+                player.src = '';
+            }
 
-    shortsContainer.querySelectorAll('.shorts-video-slide').forEach(slide => {
-        shortsObserver.observe(slide);
-    });
-}
+            hideGridView(); // 그리드 뷰가 열려있으면 닫음
+            closeShorts();  // 숏츠가 열려있으면 닫음
 
+            document.body.style.overflow = ''; // body 스크롤 허용
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // 최상단으로 스크롤
+        }
+
+        // --- 뷰(View) 관리 함수 ---
+        function showGridView(category, title) {
+            document.getElementById('hero-section').classList.add('hidden');
+            document.getElementById('main-carousel-container').classList.add('hidden');
+            const gridContainer = document.getElementById('grid-view-container');
+
+            let cardsHTML = '';
+            for (const videoId in allCardsData) {
+                if (videoId.startsWith(category)) {
+                    cardsHTML += allCardsData[videoId];
+                }
+            }
+            gridContainer.innerHTML = `
+                <div class="grid-header">
+                    <h2>${title}</h2>
+                    <button class="grid-back-btn" onclick="hideGridView()"> &lt; 뒤로 가기</button>
+                </div>
+                <div class="content-grid">${cardsHTML}</div>
+            `;
+            attachCardClickListeners(gridContainer.querySelector('.content-grid'));
+            gridContainer.classList.remove('hidden');
+        }
+
+        function hideGridView() {
+            const gridContainer = document.getElementById('grid-view-container');
+            if (!gridContainer.classList.contains('hidden')) {
+                gridContainer.classList.add('hidden');
+                gridContainer.innerHTML = '';
+                document.getElementById('hero-section').classList.remove('hidden');
+                document.getElementById('main-carousel-container').classList.remove('hidden');
+            }
+        }
+        
+        // --- 동영상/상세 페이지 관리 ---
+        function openVideo(videoUrl, startTime = 0) {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            modal.classList.remove('hidden');
+            player.src = videoUrl;
+            player.load();
+            player.addEventListener('canplay', function onCanPlay() {
+                player.currentTime = startTime;
+                player.play().catch(e => console.error("Video play failed", e));
+                player.removeEventListener('canplay', onCanPlay);
+            }, { once: true });
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            modal.classList.add('hidden');
+            if(player) {
+              player.pause();
+              player.src = '';
+            }
+            if (document.getElementById('detail-page').classList.contains('hidden')) {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function showDetailPage() {
+            const detailPage = document.getElementById('detail-page');
+            const videoModal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            const detailVideoContainer = document.getElementById('detail-video-container');
+            
+            if (player) {
+                detailVideoContainer.appendChild(player);
+            }
+            
+            videoModal.classList.add('hidden');
+            detailPage.classList.remove('hidden');
+        }
+
+        function hideDetailPage() {
+            const detailPage = document.getElementById('detail-page');
+            const videoModal = document.getElementById('videoModal');
+            const videoModalContent = videoModal.querySelector('.video-modal-content');
+            const player = document.getElementById('videoPlayer');
+
+            if (player && videoModalContent) {
+                videoModalContent.insertBefore(player, videoModalContent.firstChild);
+            }
+            
+            detailPage.classList.add('hidden');
+            videoModal.classList.remove('hidden');
+        }
+
+        // --- 숏츠 관리 ---
+        function openShorts(startIndex = 0) {
+            const shortsModal = document.getElementById('shortsModal');
+            const shortsContainer = shortsModal.querySelector('.shorts-viewer-container');
+            if (!shortsContainer || !shortsModal) return;
+            
+            shortsModal.classList.remove('hidden');
+            shortsContainer.innerHTML = '';
+            
+            const sampleShortsVideos = [ { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', title: '핵심만 쏙쏙! 상품 개정 포인트', channel: '김흥국 강사' }, { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', title: '고객의 마음을 여는 아이스브레이킹', channel: '박생명 강사' }, { src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', title: '1분 만에 끝내는 전산 입력 꿀팁', channel: '지원팀' } ];
+            const totalVideos = sampleShortsVideos.length;
+
+            sampleShortsVideos.forEach((videoData, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'shorts-video-slide';
+                const video = document.createElement('video');
+                video.src = videoData.src;
+                video.loop = true; video.playsInline = true; video.muted = true;
+                video.autoplay = true; video.controls = false; video.setAttribute('preload', 'metadata');
+                slide.appendChild(video);
+                
+                const infoOverlay = document.createElement('div');
+                infoOverlay.className = 'shorts-info-overlay';
+                infoOverlay.innerHTML = `<h3 class="shorts-video-title">${videoData.title}</h3><p class="shorts-video-channel">${videoData.channel}</p><a class="full-video-link">🎬 전체 영상 보기</a>`;
+                infoOverlay.querySelector('.full-video-link').onclick = () => { closeShorts(); openVideo('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'); };
+                slide.appendChild(infoOverlay);
+
+                const swipeUpIndicator = document.createElement('div');
+                swipeUpIndicator.className = 'swipe-indicator-up';
+                swipeUpIndicator.innerHTML = `<p class="arrow">▲</p><p>이전 영상</p>`;
+                if (index === 0) swipeUpIndicator.classList.add('hidden');
+                swipeUpIndicator.addEventListener('click', () => {
+                    const prevSlide = slide.previousElementSibling;
+                    if (prevSlide) prevSlide.scrollIntoView({ behavior: 'smooth' });
+                });
+                slide.appendChild(swipeUpIndicator);
+
+                const swipeDownIndicator = document.createElement('div');
+                swipeDownIndicator.className = 'swipe-indicator-down';
+                swipeDownIndicator.innerHTML = `<p class="arrow">▼</p><p>다음 영상</p>`;
+                if (index === totalVideos - 1) swipeDownIndicator.classList.add('hidden');
+                swipeDownIndicator.addEventListener('click', () => {
+                    const nextSlide = slide.nextElementSibling;
+                    if (nextSlide) nextSlide.scrollIntoView({ behavior: 'smooth' });
+                });
+                slide.appendChild(swipeDownIndicator);
+                shortsContainer.appendChild(slide);
+            });
+
+            document.body.style.overflow = 'hidden';
+
+            setTimeout(() => {
+                if (shortsContainer.children[startIndex]) {
+                    shortsContainer.scrollTo({ top: startIndex * shortsContainer.clientHeight, behavior: 'instant' });
+                }
+                setupShortsObserver(shortsContainer);
+            }, 50);
+        }
+
+        function closeShorts() {
+            const shortsModal = document.getElementById('shortsModal');
+            if (!shortsModal || shortsModal.classList.contains('hidden')) return;
+
+            shortsModal.classList.add('hidden');
+            const shortsContainer = shortsModal.querySelector('.shorts-viewer-container');
+            if (shortsContainer) {
+                shortsContainer.querySelectorAll('video').forEach(v => {
+                    v.pause();
+                    v.srcObject = null;
+                    v.src = '';
+                });
+                shortsContainer.innerHTML = '';
+            }
+
+            if (document.getElementById('videoModal').classList.contains('hidden') && document.getElementById('detail-page').classList.contains('hidden')) {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function setupShortsObserver(container) {
+            const options = { root: container, threshold: 0.8 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target.querySelector('video');
+                    if(video){
+                        if (entry.isIntersecting) { setTimeout(() => { video.play().catch(() => {}); }, 150); }
+                        else { video.pause(); }
+                    }
+                });
+            }, options);
+            container.querySelectorAll('.shorts-video-slide').forEach(slide => { observer.observe(slide); });
+        }
+        
+        // --- 카드 데이터 렌더링 및 이벤트 ---
+        function renderBookmarkedCarousel() {
+            const track = document.querySelector('[data-track-id="bookmarked"]');
+            if (!track) return;
+            if (bookmarkedItems.size === 0) {
+                track.innerHTML = `<p class="empty-bookmark-message">아직 찜한 콘텐츠가 없습니다. ❤️ 아이콘을 눌러 원하는 콘텐츠를 추가해 보세요!</p>`;
+                return;
+            }
+            let cardsHTML = '';
+            bookmarkedItems.forEach(videoId => {
+                if(allCardsData[videoId]) {
+                    let cardHTML = allCardsData[videoId];
+                    if (!cardHTML.includes('bookmarked')) {
+                        cardHTML = cardHTML.replace('<button class="bookmark-btn', '<button class="bookmark-btn bookmarked');
+                    }
+                    cardsHTML += cardHTML;
+                }
+            });
+            track.innerHTML = cardsHTML;
+            attachCardClickListeners(track);
+        }
+
+        function attachCardClickListeners(parentElement) {
+            parentElement.querySelectorAll('.content-card').forEach(card => {
+                if (card.dataset.listenerAttached === 'true') return;
+                card.dataset.listenerAttached = 'true';
+                
+                const bookmarkBtn = card.querySelector('.bookmark-btn');
+                if (bookmarkBtn) {
+                    bookmarkBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const videoId = card.dataset.videoId;
+                        if (bookmarkedItems.has(videoId)) {
+                            bookmarkedItems.delete(videoId);
+                            bookmarkBtn.classList.remove('bookmarked');
+                        } else {
+                            bookmarkedItems.add(videoId);
+                            bookmarkBtn.classList.add('bookmarked');
+                        }
+                        renderBookmarkedCarousel();
+                    });
+                }
+
+                card.addEventListener('click', () => {
+                    if (card.classList.contains('shorts-card')) {
+                         const allShortsOnPage = Array.from(document.querySelectorAll('#section-shorts .shorts-card'));
+                         const clickedIndex = allShortsOnPage.indexOf(card);
+                         openShorts(clickedIndex > -1 ? clickedIndex : 0);
+                    } else {
+                        const sampleVideos = ['https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'];
+                        const progressTime = parseFloat(card.dataset.progress) || 0;
+                        openVideo(sampleVideos[Math.floor(Math.random() * sampleVideos.length)], progressTime);
+                    }
+                });
+            });
+        }
+
+        // --- 초기화 ---
         document.addEventListener('DOMContentLoaded', () => {
             const bgVideo = document.getElementById('login-bg-video');
             if(bgVideo) { bgVideo.play().catch(error => {}); }
-            const profileChangeBtn = document.getElementById('current-profile-icon');
-            if(profileChangeBtn) { profileChangeBtn.addEventListener('click', returnToLogin); }
-            const muteBtn = document.getElementById('mute-toggle-btn');
-            if(muteBtn && bgVideo) { muteBtn.addEventListener('click', () => { bgVideo.muted = !bgVideo.muted; muteBtn.innerHTML = bgVideo.muted ? '🔇' : '🔊'; }); }
-            const heroTrack = document.querySelector('.hero-track');
-            if (heroTrack) { heroTrack.innerHTML = `<div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=1');"><div class="hero-info"><h2>필수 시청! 7월 개정 상품 완전정복</h2><p>달라진 보장 내용과 핵심 판매 포인트를 영상 하나로 끝내세요.</p></div></div><div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=2');"><div class="hero-info"><h2>고객 감동을 이끄는 상담 노하우</h2><p>평범한 상담을 넘어 고객의 마음을 사로잡는 비결을 공개합니다.</p></div></div><div class="hero-slide" style="background-image: url('https://picsum.photos/1600/900?random=3');"><div class="hero-info"><h2>신입을 위한 영업 성공 가이드</h2><p>이제 막 시작하는 당신을 위해 준비했습니다. A부터 Z까지!</p></div></div>`; const slides = Array.from(heroTrack.children); const nextButton = document.querySelector('.hero-arrow.arrow-next'); const prevButton = document.querySelector('.hero-arrow.arrow-prev'); if (slides && slides.length > 0 && nextButton && prevButton) { let currentIndex = 0, intervalId = null; const moveToSlide = (targetIndex) => { if (heroTrack) heroTrack.style.transform = `translateX(-${targetIndex * 100}%)`; currentIndex = targetIndex; }; const startAutoSlide = () => { stopAutoSlide(); intervalId = setInterval(() => { const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); }, 5000); }; const stopAutoSlide = () => clearInterval(intervalId); nextButton.addEventListener('click', () => { stopAutoSlide(); const nextIndex = (currentIndex + 1) % slides.length; moveToSlide(nextIndex); startAutoSlide(); }); prevButton.addEventListener('click', () => { stopAutoSlide(); const prevIndex = (currentIndex - 1 + slides.length) % slides.length; moveToSlide(prevIndex); startAutoSlide(); }); heroTrack.addEventListener('mouseenter', stopAutoSlide); heroTrack.addEventListener('mouseleave', startAutoSlide); startAutoSlide(); } }
             
-            function generateCards(trackId, count, options) { const track = document.querySelector(`[data-track-id="${trackId}"]`); if (!track) return; let cardsHTML = ''; for (let i = 1; i <= count; i++) { const videoId = `${trackId}-${i}`; const isBookmarked = bookmarkedItems.has(videoId); const progress = Math.random() * 80 + 10; const isPartial = Math.random() > 0.6; const progressTime = isPartial ? 30 : 0; const cardClass = `${options.isShorts ? 'shorts-card' : ''} ${isPartial ? 'is-in-progress' : ''}`; const imgSrc = options.isShorts ? `https://picsum.photos/160/280?random=${i + options.seed}` : `https://picsum.photos/250/140?random=${i + options.seed}`; const cardHTML = `<div class="content-card ${cardClass}" data-video-id="${videoId}" data-progress="${progressTime}"><div class="card-thumbnail"><img src="${imgSrc}" alt="${options.title} 썸네일"><button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" aria-label="찜하기"></button><div class="play-overlay"><span class="continue-watching-text">이어보기</span></div><div class="progress-bar-container"><div class="progress-bar" style="width:${progress}%"></div></div></div><div class="card-info"><div class="card-title">${options.title} #${i}</div>${!options.isShorts ? `<div class="card-meta">${options.instructor} · 조회수 ${Math.floor(Math.random()*20)}.${Math.floor(Math.random()*9)}만회</div>` : ''}</div></div>`; cardsHTML += cardHTML; allCardsData[videoId] = cardHTML; } track.innerHTML = cardsHTML; }
-            function renderBookmarkedCarousel() { const track = document.querySelector(`[data-track-id="bookmarked"]`); if (!track) return; if (bookmarkedItems.size === 0) { track.innerHTML = `<p class="empty-bookmark-message">아직 찜한 콘텐츠가 없습니다. ❤️ 아이콘을 눌러 원하는 콘텐츠를 추가해 보세요!</p>`; return; } let cardsHTML = ''; bookmarkedItems.forEach(videoId => { if(allCardsData[videoId]) cardsHTML += allCardsData[videoId]; }); track.innerHTML = cardsHTML; attachCardClickListeners(track); }
-            const allTracks = [ { id: 'shorts', options: { isShorts: true, title: '숏츠 콘텐츠', seed: 10 } }, { id: 'new', options: { isShorts: false, title: '새로운 콘텐츠', instructor: '김흥국 강사', seed: 25 } }, { id: 'best', options: { isShorts: false, title: '베스트 콘텐츠', instructor: '박생명 강사', seed: 40 } }, { id: 'products', options: { isShorts: false, title: '금융 상품', instructor: '이상품 강사', seed: 55 } }, { id: 'points', options: { isShorts: false, title: '오늘의 상품 포인트', instructor: '운영자', seed: 70 } }, { id: 'knowledge', options: { isShorts: false, title: '영업 노하우', instructor: '박지식 강사', seed: 85 } }, { id: 'it', options: { isShorts: false, title: '시스템 가이드', instructor: '지원팀', seed: 100 } } ];
-            allTracks.forEach(trackInfo => generateCards(trackInfo.id, 15, trackInfo.options));
-            function attachCardClickListeners(parentElement) { parentElement.querySelectorAll('.content-card').forEach(card => { if (card.dataset.listenerAttached === 'true') return; card.dataset.listenerAttached = 'true'; const bookmarkBtn = card.querySelector('.bookmark-btn'); if (bookmarkBtn) { bookmarkBtn.addEventListener('click', (e) => { e.stopPropagation(); const videoId = card.dataset.videoId; if (bookmarkedItems.has(videoId)) { bookmarkedItems.delete(videoId); e.target.classList.remove('bookmarked'); } else { bookmarkedItems.add(videoId); e.target.classList.add('bookmarked'); } renderBookmarkedCarousel(); }); } card.addEventListener('click', () => { if (!card.classList.contains('shorts-card')) { const sampleVideos = ['https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4']; const progressTime = parseFloat(card.dataset.progress) || 0; openVideo(sampleVideos[Math.floor(Math.random() * sampleVideos.length)], progressTime); } else { const allShortsOnPage = Array.from(document.querySelectorAll('#section-shorts .shorts-card')); const clickedIndex = allShortsOnPage.indexOf(card); openShorts(clickedIndex % sampleShortsVideos.length); } }); }); }
-            attachCardClickListeners(document.querySelector('.content-carousel'));
-            const searchInput = document.querySelector('.search-box'); const noResultsMessage = document.getElementById('no-results-message'); const contentCarousel = document.querySelector('.content-carousel');
-            searchInput.addEventListener('input', (e) => { const query = e.target.value.toLowerCase().trim(); let totalMatches = 0; allTracks.forEach(trackInfo => { const track = document.querySelector(`[data-track-id="${trackInfo.id}"]`); const wrapper = track.closest('.carousel-wrapper'); let cardsHTML = ''; let matchesInThisCarousel = 0; for (const videoId in allCardsData) { if (videoId.startsWith(trackInfo.id)) { const cardData = allCardsData[videoId]; if (cardData.toLowerCase().includes(query)) { cardsHTML += cardData; matchesInThisCarousel++; } } } track.innerHTML = cardsHTML; if(matchesInThisCarousel > 0) { wrapper.style.display = ''; totalMatches++; } else { wrapper.style.display = 'none'; } }); document.querySelector('[data-track-id="bookmarked"]').closest('.carousel-wrapper').style.display = (query) ? 'none' : ''; noResultsMessage.style.display = (totalMatches === 0 && query) ? 'block' : 'none'; attachCardClickListeners(contentCarousel); });
-            const mobileSearchBtn = document.querySelector('.mobile-search-btn'); const searchOverlay = document.getElementById('mobile-search-overlay'); const searchOverlayInput = document.querySelector('.search-overlay-input'); const searchOverlayClose = document.querySelector('.search-overlay-close'); const searchOverlayResults = document.querySelector('.search-overlay-results');
-            mobileSearchBtn.addEventListener('click', () => { searchOverlay.style.display = 'flex'; document.body.style.overflow = 'hidden'; });
-            searchOverlayClose.addEventListener('click', () => { searchOverlay.style.display = 'none'; document.body.style.overflow = ''; });
-            searchOverlayInput.addEventListener('input', (e) => { const query = e.target.value.toLowerCase().trim(); let resultsHTML = ''; if (query) { for (const videoId in allCardsData) { const cardData = allCardsData[videoId]; if (cardData.toLowerCase().includes(query)) { const tempDiv = document.createElement('div'); tempDiv.innerHTML = cardData; const cardElement = tempDiv.firstElementChild; const title = cardElement.querySelector('.card-title').textContent; const meta = cardElement.querySelector('.card-meta')?.textContent || '숏츠 콘텐츠'; const imgSrc = cardElement.querySelector('img').src; resultsHTML += `<div class="search-result-item" data-video-id="${videoId}"><img src="${imgSrc}" alt="${title}"><div class="search-result-info"><h3>${title}</h3><p>${meta}</p></div></div>`; } } } searchOverlayResults.innerHTML = resultsHTML || (query ? '<p style="text-align:center;">검색 결과가 없습니다.</p>' : ''); });
-            searchOverlayResults.addEventListener('click', (e) => { const resultItem = e.target.closest('.search-result-item'); if(resultItem) { const videoId = resultItem.dataset.videoId; document.querySelector(`[data-video-id='${videoId}']`).click(); searchOverlay.style.display = 'none'; document.body.style.overflow = ''; } });
-            document.querySelectorAll('.carousel-wrapper').forEach(wrapper => { const track = wrapper.querySelector('.carousel-track'); const prevButton = wrapper.querySelector('.arrow-prev'); const nextButton = wrapper.querySelector('.arrow-next'); if (track && prevButton && nextButton) { nextButton.addEventListener('click', () => { track.scrollBy({ left: track.clientWidth * 0.8, behavior: 'smooth' }); }); prevButton.addEventListener('click', () => { track.scrollBy({ left: -track.clientWidth * 0.8, behavior: 'smooth' }); }); } });
+            document.getElementById('current-profile-icon')?.addEventListener('click', returnToLogin);
+            document.getElementById('mute-toggle-btn')?.addEventListener('click', function() {
+                bgVideo.muted = !bgVideo.muted;
+                this.innerHTML = bgVideo.muted ? '🔇' : '🔊';
+            });
+            
+            const sideMenu = document.getElementById('side-menu');
+            if (window.innerWidth > 768) {
+                const menuTrigger = document.getElementById('menu-trigger');
+                const mainContent = document.querySelector('body');
+                menuTrigger.addEventListener('mouseenter', () => sideMenu.classList.add('active'));
+                sideMenu.addEventListener('mouseleave', () => sideMenu.classList.remove('active'));
+                mainContent.addEventListener('mouseover', (e) => {
+                    if (!e.target.closest('#side-menu') && !e.target.closest('#menu-trigger')) {
+                        sideMenu.classList.remove('active');
+                    }
+                });
+            } else {
+                document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => sideMenu.classList.toggle('active'));
+            }
+             document.querySelectorAll('#side-menu nav a').forEach(anchor => {
+                 anchor.addEventListener('click', (e) => {
+                     if (anchor.getAttribute('onclick') !== 'goToMain(event)') {
+                        const targetId = anchor.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if(targetElement) {
+                            e.preventDefault();
+                            goToMain();
+                            setTimeout(()=> targetElement.scrollIntoView({ behavior: 'smooth' }), 100);
+                        }
+                     }
+                     sideMenu.classList.remove('active');
+                 });
+             });
+            
+            const heroTrack = document.querySelector('.hero-track');
+            if (heroTrack) {
+                const slides = Array.from(heroTrack.children);
+                const nextButton = document.querySelector('.hero-arrow.arrow-next');
+                const prevButton = document.querySelector('.hero-arrow.arrow-prev');
+                if (slides.length > 0 && nextButton && prevButton) {
+                    let currentIndex = 0;
+                    let intervalId;
+                    const moveTo = () => heroTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    const resetInterval = () => { 
+                        clearInterval(intervalId); 
+                        intervalId = setInterval(() => {
+                            currentIndex = (currentIndex + 1) % slides.length;
+                            moveTo();
+                        }, 5000);
+                    };
+                    nextButton.addEventListener('click', () => { currentIndex = (currentIndex + 1) % slides.length; moveTo(); resetInterval(); });
+                    prevButton.addEventListener('click', () => { currentIndex = (currentIndex - 1 + slides.length) % slides.length; moveTo(); resetInterval(); });
+                    heroTrack.addEventListener('mouseenter', () => clearInterval(intervalId));
+                    heroTrack.addEventListener('mouseleave', resetInterval);
+                    resetInterval();
+                }
+            }
+            
+            const allTracks = [ { id: 'shorts', options: { isShorts: true, title: '숏츠 모음', seed: 10 } }, { id: 'new', options: { isShorts: false, title: '신규 콘텐츠', instructor: '김흥국 강사', seed: 25 } }, { id: 'best', options: { isShorts: false, title: '베스트 콘텐츠', instructor: '박생명 강사', seed: 40 } }, { id: 'products', options: { isShorts: false, title: '상품', instructor: '이상품 강사', seed: 55 } }, { id: 'points', options: { isShorts: false, title: '오늘의 상품 포인트', instructor: '운영자', seed: 70 } }, { id: 'knowledge', options: { isShorts: false, title: '지식 UP', instructor: '박지식 강사', seed: 85 } }, { id: 'it', options: { isShorts: false, title: '전산 및 언더', instructor: '지원팀', seed: 100 } } ];
+            allTracks.forEach(trackInfo => {
+                const track = document.querySelector(`[data-track-id="${trackInfo.id}"]`);
+                if (!track) return;
+                let cardsHTML = '';
+                for (let i = 1; i <= 15; i++) {
+                    const videoId = `${trackInfo.id}-${i}`;
+                    const isPartial = Math.random() > 0.6;
+                    const imgSrc = trackInfo.options.isShorts ? `https://picsum.photos/160/280?random=${i + trackInfo.options.seed}` : `https://picsum.photos/250/140?random=${i + trackInfo.options.seed}`;
+                    const cardHTML = `<div class="content-card ${trackInfo.options.isShorts ? 'shorts-card' : ''} ${isPartial ? 'is-in-progress' : ''}" data-video-id="${videoId}" data-progress="${isPartial ? 30 : 0}"><div class="card-thumbnail"><img src="${imgSrc}" alt="${trackInfo.options.title} 썸네일"><button class="bookmark-btn" aria-label="찜하기"></button></div><div class="card-info"><div class="card-title">${trackInfo.options.title} #${i}</div>${!trackInfo.options.isShorts ? `<div class="card-meta">${trackInfo.options.instructor} · 조회수 ${Math.floor(Math.random()*20)}.${Math.floor(Math.random()*9)}만회</div>` : ''}</div></div>`;
+                    cardsHTML += cardHTML;
+                    allCardsData[videoId] = cardHTML;
+                }
+                track.innerHTML = cardsHTML;
+            });
+            attachCardClickListeners(document.getElementById('main-carousel-container'));
+            renderBookmarkedCarousel();
+
+            document.querySelectorAll('.view-all-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const category = e.target.dataset.category;
+                    const title = e.target.previousElementSibling.textContent;
+                    showGridView(category, title);
+                });
+            });
+
+            document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
+                const track = wrapper.querySelector('.carousel-track');
+                const prevButton = wrapper.querySelector('.arrow-prev');
+                const nextButton = wrapper.querySelector('.arrow-next');
+                if (track && prevButton && nextButton) {
+                    nextButton.addEventListener('click', () => track.scrollBy({ left: track.clientWidth * 0.8, behavior: 'smooth' }));
+                    prevButton.addEventListener('click', () => track.scrollBy({ left: -track.clientWidth * 0.8, behavior: 'smooth' }));
+                }
+            });
         });
     </script>
 </body>
