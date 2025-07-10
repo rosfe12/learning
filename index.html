@@ -155,9 +155,25 @@
 
         #detail-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--background-color); z-index: 11000; overflow-y: auto; }
         .detail-page-content { max-width: 900px; margin: 0 auto; padding: 30px; }
-        .detail-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-color); padding-bottom: 15px; margin-bottom: 25px; }
-        .detail-header h2 { margin: 0; font-size: 1.8rem; color: var(--primary-color); }
-        .detail-home-btn {
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px; /* 제목과 버튼 사이의 최소 간격 확보 */
+}
+
+.detail-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    /* 제목이 너무 길 경우, 줄임표(...)로 표시되도록 설정 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detail-home-btn {
     background: var(--card-color);
     color: var(--text-primary);
     border: none;
@@ -165,8 +181,10 @@
     border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
-    white-space: nowrap; /* 글씨가 잘리지 않도록 함 */
+    white-space: nowrap; 
+    flex-shrink: 0; /* 버튼 크기가 줄어들지 않도록 설정 */
 }
+
         #detail-video-container { width: 100%; margin-bottom: 25px; }
         #detail-video-container video { width: 100%; border-radius: 8px; background-color: black; }
         .detail-section { margin-bottom: 40px; }
@@ -208,6 +226,7 @@ footer a {
             html { scroll-padding-top: 58px; } #login-page h1 { font-size: 8vw; } .profiles { gap: 3vw; flex-wrap: wrap; justify-content: center; padding: 0 5vw; } .profile-icon { width: 40vw; height: 40vw; font-size: 2rem; } .header-center, .header-right .user-name, .header-right .visit-stats, #current-profile-icon { display: none; } .header-left { flex: initial; } .header-right { flex: initial; } .site-logo { font-size: 1.2rem; } .mobile-menu-btn, .mobile-search-btn { display: block; font-size: 24px; background: none; color: var(--text-primary); border: none; cursor: pointer; } #menu-trigger { display: none; } .hero-info { max-width: 80%; } .hero-info h2 { font-size: 6vw; } .hero-info p { font-size: 3vw; } .hero-arrow, .carousel-arrow { display: none; } .carousel-track .content-card { min-width: 180px; } .carousel-track .shorts-card { min-width: 120px; } .carousel-title { font-size: 1.2rem; } .card-title { font-size: 0.9rem; } .card-meta { font-size: 0.7rem; }
             .content-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
             .content-grid .shorts-card .card-thumbnail { height: 300px; }
+
     /* ▼▼▼ 상세 페이지 홈 버튼 모바일 스타일 추가 ▼▼▼ */
     .detail-home-btn {
         padding: 8px 14px;
