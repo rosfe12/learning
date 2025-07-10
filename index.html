@@ -453,7 +453,7 @@ footer a {
             // 정보 업데이트
             document.getElementById('video-info-title').textContent = videoInfo.title;
             document.getElementById('video-info-instructor').textContent = videoInfo.instructor;
-            document.getElementById('video-info-meta').textContent = `조회수 ${videoInfo.views} · ${videoInfo.date}`;
+            document.getElementById('video-info-meta').textContent = `${videoInfo.views} · ${videoInfo.date}`;
             
             // 찜하기 버튼 상태 업데이트
             bookmarkBtn.dataset.videoId = videoInfo.videoId;
