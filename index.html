@@ -198,8 +198,24 @@
         @media (max-width: 768px) { 
             html { scroll-padding-top: 58px; } 
             #login-page h1 { font-size: 8vw; } 
-            .profiles { gap: 3vw; } 
-            .profile-icon { width: 40vw; max-width: 120px; height: 40vw; max-height: 120px; font-size: 2rem; } 
+            .profiles {
+    gap: 1rem; /* 간격을 고정 값으로 변경 */
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+.profile {
+    flex-basis: 42%; /* 한 줄에 2개가 들어갈 수 있도록 너비 지정 */
+    max-width: 150px; /* 너무 커지는 것을 방지 */
+}
+
+.profile-icon {
+    width: 100%; /* 부모(profile)의 너비를 따라감 */
+    height: auto;
+    aspect-ratio: 1 / 1; /* 가로세로 비율을 1:1로 유지 */
+    font-size: 1.5rem;
+}
             header { display: flex; align-items: center; justify-content: space-between; padding: 0 4%; width: 92%; }
             .header-center, .header-right .user-name, .header-right .visit-stats, #current-profile-icon { display: none; } 
             .header-left { flex: initial; } .header-right { flex: initial; } 
