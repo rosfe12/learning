@@ -30,17 +30,30 @@
         .hidden { display: none !important; }
 
         /* 로그인 페이지 */
-        #login-page { position: relative; height: 100vh; overflow: hidden; display: flex; }
+        #login-page { position: relative; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
         .login-video-background { position: absolute; top: -10px; left: -10px; width: calc(100% + 20px); height: calc(100% + 20px); z-index: 1; }
         #login-bg-video { width: 100%; height: 100%; object-fit: cover; filter: blur(2px) brightness(0.6); }
         .login-video-background::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.3); }
-        .login-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; text-align: center; }
-        #login-page h1 { font-size: 3.5rem; font-weight: 500; margin: 2.5rem 0 0 0; }
-        .profiles { display: flex; gap: 2.5rem; }
-        .profile-icon { width: 120px; height: 120px; background: linear-gradient(45deg, var(--primary-color), #8a2be2); border-radius: 8px; border: 2px solid transparent; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: bold; color: var(--text-primary); cursor: pointer; transition: all 0.2s ease; padding: 10px; box-sizing: border-box; text-align: center; }
+        .login-container { position: relative; z-index: 2; text-align: center; }
+        #login-page h1 { font-size: 3.5rem; font-weight: 500; margin-bottom: 2.5rem; }
+        .profiles { display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap; }
+        .profile { text-align: center; cursor: pointer; }
+        .profile-icon { width: 120px; height: 120px; background: linear-gradient(45deg, var(--primary-color), #8a2be2); border-radius: 8px; border: 2px solid transparent; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: bold; color: var(--text-primary); transition: all 0.2s ease; padding: 10px; box-sizing: border-box; margin: 0 auto; }
         .profile:hover .profile-icon { transform: scale(1.05); border-color: var(--text-primary); }
+        .profile-name { margin-top: 10px; font-size: 1rem; }
         .sound-btn { position: absolute; bottom: 30px; right: 30px; z-index: 3; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; }
 
+        /* 로그인 모달 스타일 */
+        #login-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 10; display: flex; justify-content: center; align-items: center; }
+        .login-modal-content { background-color: var(--background-color); padding: 40px; border-radius: 8px; width: 90%; max-width: 400px; text-align: center; position: relative; }
+        #login-modal-profile-icon { width: 80px; height: 80px; font-size: 1.2rem; margin: -80px auto 20px auto; }
+        .login-modal-content h2 { font-size: 1.8rem; color: var(--primary-color); margin-top: 0; margin-bottom: 25px; }
+        .login-input { width: 100%; padding: 15px; margin-bottom: 15px; background-color: var(--card-color); border: 1px solid var(--text-secondary); border-radius: 5px; color: var(--text-primary); font-size: 1rem; box-sizing: border-box; }
+        .login-submit-btn { width: 100%; padding: 15px; background-color: var(--primary-color); border: none; border-radius: 5px; color: white; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .password-options { margin-top: 20px; font-size: 0.9rem; }
+        .password-options a { color: var(--text-secondary); text-decoration: none; }
+        .login-back-btn { position: absolute; top: 15px; left: 15px; background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer; }
+        
         /* 메인 페이지 레이아웃 */
         #main-page { display: flex; }
         #menu-trigger { position: fixed; left: 0; top: 0; bottom: 0; width: 25px; z-index: 11500; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity 0.3s ease; }
@@ -155,37 +168,10 @@
 
         #detail-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--background-color); z-index: 11000; overflow-y: auto; }
         .detail-page-content { max-width: 900px; margin: 0 auto; padding: 30px; }
-
-.detail-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px; /* 제목과 버튼 사이의 최소 간격 확보 */
-}
-
-.detail-header h2 {
-    margin: 0;
-    font-size: 1.8rem;
-    color: var(--primary-color);
-    /* 제목이 너무 길 경우, 줄임표(...)로 표시되도록 설정 */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.detail-home-btn {
-    background: var(--card-color);
-    color: var(--text-primary);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap; 
-    flex-shrink: 0; /* 버튼 크기가 줄어들지 않도록 설정 */
-}
-
-        #detail-video-container { width: 100%; margin-bottom: 25px; }
+        .detail-header { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .detail-header h2 { margin: 0; font-size: 1.8rem; color: var(--primary-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .detail-home-btn { background: var(--card-color); color: var(--text-primary); border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; white-space: nowrap;  flex-shrink: 0; }
+        #detail-video-container { width: 100%; margin-top: 25px; margin-bottom: 25px; border-top: 1px solid var(--card-color); padding-top: 25px; }
         #detail-video-container video { width: 100%; border-radius: 8px; background-color: black; }
         .detail-section { margin-bottom: 40px; }
         .detail-section-title { font-size: 1.4rem; font-weight: bold; margin: 0 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid var(--primary-color); }
@@ -206,34 +192,29 @@
         /* 기타 */
         #no-results-message { color: var(--text-secondary); text-align: center; padding: 50px; font-size: 1.2rem; }
         #mobile-search-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--background-color); z-index: 5000; display: none; flex-direction: column; }
-
-footer {
-    padding: 50px 4%;
-    border-top: 1px solid var(--card-color);
-    margin-top: 30px;
-    display: flex;
-    gap: 30px;
-    justify-content: center;
-    align-items: center;
-}
-
-footer a {
-    color: var(--text-primary); /* 흰색 계열 */
-    text-decoration: none;
-}
-      
+        footer { padding: 50px 4%; border-top: 1px solid var(--card-color); margin-top: 30px; display: flex; gap: 30px; justify-content: center; align-items: center; }
+        footer a { color: var(--text-primary); text-decoration: none; }
+        
         @media (max-width: 768px) { 
-            html { scroll-padding-top: 58px; } #login-page h1 { font-size: 8vw; } .profiles { gap: 3vw; flex-wrap: wrap; justify-content: center; padding: 0 5vw; } .profile-icon { width: 40vw; height: 40vw; font-size: 2rem; } .header-center, .header-right .user-name, .header-right .visit-stats, #current-profile-icon { display: none; } .header-left { flex: initial; } .header-right { flex: initial; } .site-logo { font-size: 1.2rem; } .mobile-menu-btn, .mobile-search-btn { display: block; font-size: 24px; background: none; color: var(--text-primary); border: none; cursor: pointer; } #menu-trigger { display: none; } .hero-info { max-width: 80%; } .hero-info h2 { font-size: 6vw; } .hero-info p { font-size: 3vw; } .hero-arrow, .carousel-arrow { display: none; } .carousel-track .content-card { min-width: 180px; } .carousel-track .shorts-card { min-width: 120px; } .carousel-title { font-size: 1.2rem; } .card-title { font-size: 0.9rem; } .card-meta { font-size: 0.7rem; }
+            html { scroll-padding-top: 58px; } 
+            #login-page h1 { font-size: 8vw; } 
+            .profiles { gap: 3vw; } 
+            .profile-icon { width: 40vw; max-width: 120px; height: 40vw; max-height: 120px; font-size: 2rem; } 
+            header { display: flex; align-items: center; justify-content: space-between; padding: 0 4%; width: 92%; }
+            .header-center, .header-right .user-name, .header-right .visit-stats, #current-profile-icon { display: none; } 
+            .header-left { flex: initial; } .header-right { flex: initial; } 
+            .site-logo { font-size: 1.2rem; } 
+            .mobile-menu-btn, .mobile-search-btn { display: block; font-size: 24px; background: none; color: var(--text-primary); border: none; cursor: pointer; } 
+            #menu-trigger { display: none; } 
+            .hero-info { max-width: 80%; } .hero-info h2 { font-size: 6vw; } .hero-info p { font-size: 3vw; } 
+            .hero-arrow, .carousel-arrow { display: none; } 
+            .carousel-track .content-card { min-width: 180px; } .carousel-track .shorts-card { min-width: 120px; } 
+            .carousel-title { font-size: 1.2rem; } 
+            .card-title { font-size: 0.9rem; } .card-meta { font-size: 0.7rem; }
             .content-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
             .content-grid .shorts-card .card-thumbnail { height: 300px; }
-
-    /* ▼▼▼ 상세 페이지 홈 버튼 모바일 스타일 추가 ▼▼▼ */
-    .detail-home-btn {
-        padding: 8px 14px;
-        font-size: 0.9rem;
-    }
-}
-
+            .detail-home-btn { padding: 8px 14px; font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
@@ -244,16 +225,39 @@ footer a {
                 <source src="https://player.vimeo.com/progressive_redirect/playback/1097431073/rendition/1080p/file.mp4?loc=external&signature=16e7c65b8b67cda4d65173d0d0c178dfeca4c494ee84e633895c13df3bfc1e12" type="video/mp4">
             </video>
         </div>
-        <div class="login-content">
-            <div class="profiles">
-                <div class="profile" onclick="showMainPage('GA')"><div class="profile-icon">GA</div></div>
-                <div class="profile" onclick="showMainPage('DB')"><div class="profile-icon">DB</div></div>
-                <div class="profile" onclick="showMainPage('설계사')"><div class="profile-icon">설계사</div></div>
-                <div class="profile" onclick="showMainPage('공통')"><div class="profile-icon">공통과정</div></div>
-            </div>
-            <h1>흥국생명과 행복하세요.</h1>
+        <div id="profile-selection" class="login-container">
+    <div class="profiles">
+        <div class="profile" onclick="showLoginModal('GA')">
+            <div class="profile-icon">GA</div>
+        </div>
+        <div class="profile" onclick="showLoginModal('DB')">
+            <div class="profile-icon">DB</div>
+        </div>
+        <div class="profile" onclick="showLoginModal('설계사')">
+            <div class="profile-icon">설계사</div>
+        </div>
+        <div class="profile" onclick="showLoginModal('공통')">
+            <div class="profile-icon">공통과정</div>
+        </div>
+    </div>
+    <h1>흥국생명과 행복하세요.</h1>
+
         </div>
         <button id="mute-toggle-btn" class="sound-btn">🔇</button>
+
+        <div id="login-modal" class="hidden">
+            <div class="login-modal-content">
+                <button class="login-back-btn" onclick="hideLoginModal()">←</button>
+                <div id="login-modal-profile-icon" class="profile-icon"></div>
+                <h2>로그인</h2>
+                <input type="text" class="login-input" placeholder="아이디">
+                <input type="password" class="login-input" placeholder="비밀번호">
+                <button id="login-submit-btn" class="login-submit-btn">로그인</button>
+                <div class="password-options">
+                    <a href="#">비밀번호 변경</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="videoModal" class="hidden">
@@ -278,10 +282,10 @@ footer a {
     
     <div id="detail-page" class="hidden">
         <div class="detail-page-content">
-<header class="detail-header">
-    <h2>콘텐츠 상세</h2>
-    <button class="detail-home-btn" onclick="goToMain()">홈으로</button>
-</header>
+            <header class="detail-header">
+                <h2>콘텐츠 상세</h2>
+                <button class="detail-home-btn" onclick="goToMain()">홈으로</button>
+            </header>
 
             <main>
                 <div id="detail-video-container"></div>
@@ -369,16 +373,42 @@ footer a {
         let bookmarkedItems = new Set();
         
         // --- 페이지 관리 함수 ---
-        function showMainPage(profileName) {
+        function showLoginModal(profileName) {
+            document.getElementById('profile-selection').classList.add('hidden');
+            const loginModal = document.getElementById('login-modal');
+            loginModal.classList.remove('hidden');
+
+            const profileIcon = loginModal.querySelector('#login-modal-profile-icon');
+            profileIcon.textContent = profileName.substring(0, 2);
+            
+            const loginBtn = document.getElementById('login-submit-btn');
+            const newLoginBtn = loginBtn.cloneNode(true);
+            loginBtn.parentNode.replaceChild(newLoginBtn, loginBtn);
+            
+            newLoginBtn.addEventListener('click', () => {
+                loginAndShowMain(profileName);
+            });
+        }
+
+        function hideLoginModal() {
+            document.getElementById('login-modal').classList.add('hidden');
+            document.getElementById('profile-selection').classList.remove('hidden');
+        }
+
+        function loginAndShowMain(profileName) {
             document.getElementById('login-page').style.display = 'none';
             document.getElementById('main-page').classList.remove('hidden');
             const profileIconInHeader = document.getElementById('current-profile-icon');
-            if (profileIconInHeader) profileIconInHeader.textContent = profileName.substring(0, 2);
+            if (profileIconInHeader) {
+                profileIconInHeader.textContent = profileName.substring(0, 2);
+            }
         }
 
         function returnToLogin() {
             document.getElementById('main-page').classList.add('hidden');
-            document.getElementById('login-page').style.display = 'flex';
+            const loginPage = document.getElementById('login-page');
+            loginPage.style.display = 'flex';
+            hideLoginModal();
             const bgVideo = document.getElementById('login-bg-video');
             if (bgVideo) bgVideo.play().catch(e => {});
         }
@@ -450,12 +480,10 @@ footer a {
             const player = document.getElementById('videoPlayer');
             const bookmarkBtn = document.getElementById('video-modal-bookmark-btn');
             
-            // 정보 업데이트
             document.getElementById('video-info-title').textContent = videoInfo.title;
             document.getElementById('video-info-instructor').textContent = videoInfo.instructor;
             document.getElementById('video-info-meta').textContent = `${videoInfo.views} · ${videoInfo.date}`;
             
-            // 찜하기 버튼 상태 업데이트
             bookmarkBtn.dataset.videoId = videoInfo.videoId;
             if (bookmarkedItems.has(videoInfo.videoId)) {
                 bookmarkBtn.classList.add('bookmarked');
@@ -760,7 +788,6 @@ footer a {
                 }
             }
             
-            // 팝업 내 찜하기 버튼 이벤트 리스너 (최초 1회만 설정)
             const videoModalBookmarkBtn = document.getElementById('video-modal-bookmark-btn');
             videoModalBookmarkBtn.addEventListener('click', function() {
                 const videoId = this.dataset.videoId;
@@ -774,7 +801,6 @@ footer a {
                     bookmarkedItems.delete(videoId);
                 }
 
-                // 메인 페이지의 원본 카드 찜하기 버튼 상태도 동기화
                 const originalCard = document.querySelector(`.content-card[data-video-id='${videoId}']`);
                 if (originalCard) {
                     const originalBookmarkBtn = originalCard.querySelector('.bookmark-btn');
@@ -783,7 +809,6 @@ footer a {
                     }
                 }
                 
-                // 찜한 목록 캐러셀 갱신
                 renderBookmarkedCarousel();
             });
 
